@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="SSRS.Framework.Database">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="JQMLPT01\KAPUCHIN_2012:JQMLPT01\JQMartin">
+          <Created>2013-05-22T19:45:36.5181377+01:00</Created>
+          <Type>SQL</Type>
+          <Server>JQMLPT01\KAPUCHIN_2012</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName />
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Custom.StorageConfig.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JQMLPT01\KAPUCHIN_2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>JQMLPT01\KAPUCHIN_2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Custom.StorageConfig.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Schema.Custom.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JQMLPT01\KAPUCHIN_2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>JQMLPT01\KAPUCHIN_2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Schema.Custom.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Security.Role.db_CustomFormattingReader.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JQMLPT01\KAPUCHIN_2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>JQMLPT01\KAPUCHIN_2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Security.Role.db_CustomFormattingReader.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.Custom.ColourPalette.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JQMLPT01\KAPUCHIN_2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>JQMLPT01\KAPUCHIN_2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Table.Custom.ColourPalette.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.Custom.ExecutionAlert.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JQMLPT01\KAPUCHIN_2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>JQMLPT01\KAPUCHIN_2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Table.Custom.ExecutionAlert.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.Custom.FontFamily.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JQMLPT01\KAPUCHIN_2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>JQMLPT01\KAPUCHIN_2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Table.Custom.FontFamily.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.Custom.ReportDetails.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JQMLPT01\KAPUCHIN_2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>JQMLPT01\KAPUCHIN_2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Table.Custom.ReportDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.Custom.RptClassification.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JQMLPT01\KAPUCHIN_2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>JQMLPT01\KAPUCHIN_2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Table.Custom.RptClassification.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.Custom.RptColourScheme.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:JQMLPT01\KAPUCHIN_2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>JQMLPT01\KAPUCHIN_2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Table.Custom.RptColourScheme.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>
