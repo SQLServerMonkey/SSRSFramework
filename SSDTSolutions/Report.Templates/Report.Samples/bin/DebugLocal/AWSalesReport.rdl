@@ -9,7 +9,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="SalesHeader">
+    <DataSet Name="ReportData_SalesHeader">
       <Query>
         <DataSourceName>AdventureWorks2012</DataSourceName>
         <QueryParameters>
@@ -92,7 +92,7 @@ WHERE SalesHead.SalesOrderNumber = @SalesOrderNumber
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="SalesDetail">
+    <DataSet Name="ReportData_SalesDetail">
       <Query>
         <DataSourceName>AdventureWorks2012</DataSourceName>
         <QueryParameters>
@@ -181,6 +181,41 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
         </Field>
       </Fields>
     </DataSet>
+    <DataSet Name="ReportConfig_TablixHeaderFormatting">
+      <SharedDataSet>
+        <SharedDataSetReference>ReportConfig_TablixHeaderFormatting</SharedDataSetReference>
+      </SharedDataSet>
+      <Fields>
+        <Field Name="TablixHeaderBackgroundColourName">
+          <DataField>TablixHeaderBackgroundColourName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TablixHeaderBackgroundColourHex">
+          <DataField>TablixHeaderBackgroundColourHex</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TablixHeaderTextColourName">
+          <DataField>TablixHeaderTextColourName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TablixHeaderTextColourHex">
+          <DataField>TablixHeaderTextColourHex</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TablixHeaderFontFamilyName">
+          <DataField>TablixHeaderFontFamilyName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TablixHeaderFontWeightName">
+          <DataField>TablixHeaderFontWeightName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TablixHeaderFontSize">
+          <DataField>TablixHeaderFontSize</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -190,25 +225,25 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>3.05562cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.15604cm</Width>
+                  <Width>2.94003cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>8.17563cm</Width>
+                  <Width>7.62001cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.9498cm</Width>
+                  <Width>2.68522cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.10512cm</Width>
+                  <Width>3.083cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.77125cm</Width>
+                  <Width>4.45917cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.43487cm</Width>
+                  <Width>3.24966cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -229,9 +264,10 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Product ID</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
-                                    <FontWeight>SemiBold</FontWeight>
-                                    <Color>White</Color>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
+                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
+                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -244,7 +280,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>CornflowerBlue</BackgroundColor>
+                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -257,6 +293,9 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                       <CellContents>
                         <Textbox Name="Textbox42">
                           <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!OrderQty.Value</SortExpression>
+                          </UserSort>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -264,9 +303,10 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Order Qty</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
-                                    <FontWeight>SemiBold</FontWeight>
-                                    <Color>White</Color>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
+                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
+                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -279,7 +319,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>CornflowerBlue</BackgroundColor>
+                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -299,9 +339,10 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Product Name</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
-                                    <FontWeight>SemiBold</FontWeight>
-                                    <Color>White</Color>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
+                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
+                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -314,7 +355,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>CornflowerBlue</BackgroundColor>
+                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -334,9 +375,10 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Product Size</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
-                                    <FontWeight>SemiBold</FontWeight>
-                                    <Color>White</Color>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
+                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
+                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -349,7 +391,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>CornflowerBlue</BackgroundColor>
+                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -362,6 +404,9 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                       <CellContents>
                         <Textbox Name="Textbox17">
                           <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!UnitPrice.Value</SortExpression>
+                          </UserSort>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -369,9 +414,10 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Unit Price</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
-                                    <FontWeight>SemiBold</FontWeight>
-                                    <Color>White</Color>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
+                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
+                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -384,7 +430,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>CornflowerBlue</BackgroundColor>
+                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -397,6 +443,9 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                       <CellContents>
                         <Textbox Name="Textbox19">
                           <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!UnitPriceDiscount.Value</SortExpression>
+                          </UserSort>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -404,9 +453,10 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Unit Price Discount</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
-                                    <FontWeight>SemiBold</FontWeight>
-                                    <Color>White</Color>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
+                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
+                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -419,7 +469,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>CornflowerBlue</BackgroundColor>
+                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -432,6 +482,9 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                       <CellContents>
                         <Textbox Name="Textbox21">
                           <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!LineTotal.Value</SortExpression>
+                          </UserSort>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -439,9 +492,10 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Line Total</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
-                                    <FontWeight>SemiBold</FontWeight>
-                                    <Color>White</Color>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
+                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
+                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -454,7 +508,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>CornflowerBlue</BackgroundColor>
+                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -479,7 +533,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>=Fields!ProductID.Value</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -513,7 +567,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>=Fields!OrderQty.Value</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -547,7 +601,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>=Fields!ProductName.Value</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -579,7 +633,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>=Fields!ProductSize.Value</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -613,7 +667,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>=Fields!UnitPrice.Value</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                     <Format>C2</Format>
                                   </Style>
                                 </TextRun>
@@ -646,7 +700,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>=Fields!UnitPriceDiscount.Value</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                     <Format>C2</Format>
                                   </Style>
                                 </TextRun>
@@ -679,7 +733,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>=Fields!LineTotal.Value</Value>
                                   <Style>
-                                    <FontFamily>Verdana</FontFamily>
+                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                     <Format>C2</Format>
                                   </Style>
                                 </TextRun>
@@ -730,7 +784,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
               </TablixMembers>
             </TablixRowHierarchy>
             <RepeatColumnHeaders>true</RepeatColumnHeaders>
-            <DataSetName>SalesDetail</DataSetName>
+            <DataSetName>ReportData_SalesDetail</DataSetName>
             <SortExpressions>
               <SortExpression>
                 <Value>=Fields!SalesOrderDetailID.Value</Value>
@@ -783,7 +837,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>Customer Name:</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <FontWeight>SemiBold</FontWeight>
                                       </Style>
                                     </TextRun>
@@ -792,8 +846,8 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox25</rd:DefaultName>
-                              <Top>0.40252cm</Top>
-                              <Left>0.29104cm</Left>
+                              <Top>0.42898cm</Top>
+                              <Left>0.26458cm</Left>
                               <Height>0.6cm</Height>
                               <Width>3.69062cm</Width>
                               <Style>
@@ -815,7 +869,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!Customer.Value</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
@@ -823,8 +877,8 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox26</rd:DefaultName>
-                              <Top>0.40252cm</Top>
-                              <Left>4.15805cm</Left>
+                              <Top>0.42898cm</Top>
+                              <Left>4.13159cm</Left>
                               <Height>0.6cm</Height>
                               <Width>6.78625cm</Width>
                               <ZIndex>1</ZIndex>
@@ -847,7 +901,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>Account Number:</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <FontWeight>SemiBold</FontWeight>
                                       </Style>
                                     </TextRun>
@@ -856,8 +910,8 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox27</rd:DefaultName>
-                              <Top>1.17891cm</Top>
-                              <Left>0.29104cm</Left>
+                              <Top>1.20537cm</Top>
+                              <Left>0.26458cm</Left>
                               <Height>0.6cm</Height>
                               <Width>3.69062cm</Width>
                               <ZIndex>2</ZIndex>
@@ -880,7 +934,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!AccountNumber.Value</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
@@ -888,7 +942,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox28</rd:DefaultName>
-                              <Top>1.17891cm</Top>
+                              <Top>1.20537cm</Top>
                               <Left>4.15804cm</Left>
                               <Height>0.6cm</Height>
                               <Width>6.78626cm</Width>
@@ -912,7 +966,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>Address:</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <FontWeight>SemiBold</FontWeight>
                                       </Style>
                                     </TextRun>
@@ -921,8 +975,8 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox29</rd:DefaultName>
-                              <Top>1.9553cm</Top>
-                              <Left>0.29104cm</Left>
+                              <Top>1.98176cm</Top>
+                              <Left>0.26458cm</Left>
                               <Height>0.6cm</Height>
                               <Width>3.69061cm</Width>
                               <ZIndex>4</ZIndex>
@@ -945,7 +999,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!AddressLine1.Value</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
@@ -953,7 +1007,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox30</rd:DefaultName>
-                              <Top>1.9553cm</Top>
+                              <Top>1.98176cm</Top>
                               <Left>4.15804cm</Left>
                               <Height>0.6cm</Height>
                               <Width>6.78626cm</Width>
@@ -977,7 +1031,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!AddressLine2.Value</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
@@ -985,7 +1039,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox30</rd:DefaultName>
-                              <Top>2.73169cm</Top>
+                              <Top>2.75815cm</Top>
                               <Left>4.15805cm</Left>
                               <Height>0.6cm</Height>
                               <Width>6.78626cm</Width>
@@ -1009,7 +1063,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!City.Value</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
@@ -1017,7 +1071,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox30</rd:DefaultName>
-                              <Top>3.50808cm</Top>
+                              <Top>3.53454cm</Top>
                               <Left>4.15805cm</Left>
                               <Height>0.6cm</Height>
                               <Width>6.78626cm</Width>
@@ -1041,7 +1095,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!PostalCode.Value</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
@@ -1049,7 +1103,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox30</rd:DefaultName>
-                              <Top>4.28446cm</Top>
+                              <Top>4.31092cm</Top>
                               <Left>4.15804cm</Left>
                               <Height>0.6cm</Height>
                               <Width>6.78626cm</Width>
@@ -1073,7 +1127,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>Order Date:</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <FontWeight>SemiBold</FontWeight>
                                       </Style>
                                     </TextRun>
@@ -1082,7 +1136,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox25</rd:DefaultName>
-                              <Top>1.9553cm</Top>
+                              <Top>1.98176cm</Top>
                               <Left>11.80688cm</Left>
                               <Height>0.6cm</Height>
                               <Width>2.94979cm</Width>
@@ -1106,7 +1160,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>Due Date:</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <FontWeight>SemiBold</FontWeight>
                                       </Style>
                                     </TextRun>
@@ -1115,7 +1169,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox25</rd:DefaultName>
-                              <Top>2.73169cm</Top>
+                              <Top>2.75815cm</Top>
                               <Left>11.80688cm</Left>
                               <Height>0.6cm</Height>
                               <Width>2.94979cm</Width>
@@ -1139,7 +1193,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!OrderDate.Value</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <Format>d</Format>
                                       </Style>
                                     </TextRun>
@@ -1174,7 +1228,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!DueDate.Value</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <Format>d</Format>
                                       </Style>
                                     </TextRun>
@@ -1209,7 +1263,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>Sub-Total:</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <FontWeight>SemiBold</FontWeight>
                                       </Style>
                                     </TextRun>
@@ -1242,7 +1296,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>Tax:</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <FontWeight>SemiBold</FontWeight>
                                       </Style>
                                     </TextRun>
@@ -1275,7 +1329,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>Total Due:</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <FontWeight>SemiBold</FontWeight>
                                       </Style>
                                     </TextRun>
@@ -1308,7 +1362,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!SubTotal.Value</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <Format>C2</Format>
                                       </Style>
                                     </TextRun>
@@ -1341,7 +1395,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!TaxAmt.Value</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <Format>C2</Format>
                                       </Style>
                                     </TextRun>
@@ -1378,7 +1432,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!TotalDue.Value</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <Format>C2</Format>
                                       </Style>
                                     </TextRun>
@@ -1439,7 +1493,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>Order No. :</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <FontWeight>SemiBold</FontWeight>
                                       </Style>
                                     </TextRun>
@@ -1448,7 +1502,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox23</rd:DefaultName>
-                              <Top>0.40252cm</Top>
+                              <Top>0.42898cm</Top>
                               <Left>11.80688cm</Left>
                               <Height>0.6cm</Height>
                               <Width>2.94979cm</Width>
@@ -1472,7 +1526,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>Order Type:</Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <FontWeight>SemiBold</FontWeight>
                                       </Style>
                                     </TextRun>
@@ -1481,7 +1535,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox24</rd:DefaultName>
-                              <Top>1.17891cm</Top>
+                              <Top>1.20537cm</Top>
                               <Left>11.80688cm</Left>
                               <Height>0.6cm</Height>
                               <Width>2.94979cm</Width>
@@ -1504,14 +1558,16 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                   <TextRuns>
                                     <TextRun>
                                       <Value>=Fields!SalesOrderNumber.Value</Value>
-                                      <Style />
+                                      <Style>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                      </Style>
                                     </TextRun>
                                   </TextRuns>
                                   <Style />
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox36</rd:DefaultName>
-                              <Top>0.40252cm</Top>
+                              <Top>0.42898cm</Top>
                               <Left>14.93306cm</Left>
                               <Height>0.6cm</Height>
                               <Width>3.69062cm</Width>
@@ -1534,7 +1590,9 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                   <TextRuns>
                                     <TextRun>
                                       <Value>=Fields!OrderType.Value</Value>
-                                      <Style />
+                                      <Style>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                      </Style>
                                     </TextRun>
                                   </TextRuns>
                                   <Style />
@@ -1565,7 +1623,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>Freight: </Value>
                                       <Style>
-                                        <FontFamily>Verdana</FontFamily>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <FontWeight>SemiBold</FontWeight>
                                       </Style>
                                     </TextRun>
@@ -1598,6 +1656,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!Freight.Value</Value>
                                       <Style>
+                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                                         <Format>c2</Format>
                                       </Style>
                                     </TextRun>
@@ -1651,7 +1710,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>SalesHeader</DataSetName>
+            <DataSetName>ReportData_SalesHeader</DataSetName>
             <Top>0.17639cm</Top>
             <Left>0.42016cm</Left>
             <Height>5.39433cm</Height>
@@ -1681,9 +1740,11 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Globals!ReportName</Value>
+                      <Value>=Parameters!ReportConfig_ReportTitle.Value</Value>
                       <Style>
-                        <FontFamily>Verdana</FontFamily>
+                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                        <FontSize>26pt</FontSize>
+                        <FontWeight>SemiBold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1693,8 +1754,8 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0.36724cm</Top>
-              <Left>0.42016cm</Left>
+              <Top>0.3937cm</Top>
+              <Left>0.3937cm</Left>
               <Height>1.31438cm</Height>
               <Width>20.81972cm</Width>
               <Style>
@@ -1714,9 +1775,9 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Variables!Classification.Value</Value>
+                      <Value>=Parameters!ReportConfig_ReportClassification.Value</Value>
                       <Style>
-                        <FontFamily>Verdana</FontFamily>
+                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                         <FontSize>8pt</FontSize>
                         <FontWeight>SemiBold</FontWeight>
                         <Color>Gray</Color>
@@ -1729,8 +1790,8 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>1.85801cm</Top>
-              <Left>0.42016cm</Left>
+              <Top>1.88447cm</Top>
+              <Left>0.3937cm</Left>
               <Height>0.50561cm</Height>
               <Width>20.81972cm</Width>
               <ZIndex>1</ZIndex>
@@ -1746,7 +1807,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
             </Textbox>
             <Image Name="AdventureWorksLogo">
               <Source>External</Source>
-              <Value>file:///CZVH8X1/SSRSImages$/AdventureWorksLogo.jpg</Value>
+              <Value>=First(Fields!ImageLocation.Value, "ReportConfig_ReportDetails")</Value>
               <Sizing>FitProportional</Sizing>
               <Top>0.36724cm</Top>
               <Left>21.41627cm</Left>
@@ -1778,9 +1839,9 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Variables!Classification.Value</Value>
+                      <Value>=(ReportItems!Textbox2.Value)</Value>
                       <Style>
-                        <FontFamily>Verdana</FontFamily>
+                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                         <FontSize>8pt</FontSize>
                         <FontWeight>SemiBold</FontWeight>
                         <Color>Gray</Color>
@@ -1816,7 +1877,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                     <TextRun>
                       <Value>Report Executed By: </Value>
                       <Style>
-                        <FontFamily>Verdana</FontFamily>
+                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
@@ -1850,7 +1911,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                     <TextRun>
                       <Value>Report Executed At: </Value>
                       <Style>
-                        <FontFamily>Verdana</FontFamily>
+                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
@@ -1884,7 +1945,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                     <TextRun>
                       <Value>=User!UserID</Value>
                       <Style>
-                        <FontFamily>Verdana</FontFamily>
+                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
@@ -1920,7 +1981,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                     <TextRun>
                       <Value>=Globals!ExecutionTime</Value>
                       <Style>
-                        <FontFamily>Verdana</FontFamily>
+                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
@@ -1956,7 +2017,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                     <TextRun>
                       <Value>="Page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
                       <Style>
-                        <FontFamily>Verdana</FontFamily>
+                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
@@ -2004,6 +2065,26 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
       <DataType>String</DataType>
       <Prompt>Sales Order Number</Prompt>
       <UsedInQuery>True</UsedInQuery>
+    </ReportParameter>
+    <ReportParameter Name="ReportConfig_ReportTitle">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>ReportConfig_ReportDetails</DataSetName>
+          <ValueField>ReportTitle</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="ReportConfig_ReportClassification">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>ReportConfig_ReportDetails</DataSetName>
+          <ValueField>ReportClassification</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Hidden>true</Hidden>
     </ReportParameter>
   </ReportParameters>
   <EmbeddedImages>

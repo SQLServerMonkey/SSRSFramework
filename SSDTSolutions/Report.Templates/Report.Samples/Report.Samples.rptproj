@@ -3,19 +3,44 @@
   <State>$base64$PFNvdXJjZUNvbnRyb2xJbmZvIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zOmRkbDI9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDAzL2VuZ2luZS8yIiB4bWxuczpkZGwyXzI9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDAzL2VuZ2luZS8yLzIiIHhtbG5zOmRkbDEwMF8xMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDA4L2VuZ2luZS8xMDAvMTAwIiB4bWxuczpkZGwyMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEwL2VuZ2luZS8yMDAiIHhtbG5zOmRkbDIwMF8yMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEwL2VuZ2luZS8yMDAvMjAwIiB4bWxuczpkZGwzMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDExL2VuZ2luZS8zMDAiIHhtbG5zOmRkbDMwMF8zMDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDExL2VuZ2luZS8zMDAvMzAwIiB4bWxuczpkZGw0MDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEyL2VuZ2luZS80MDAiIHhtbG5zOmRkbDQwMF80MDA9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vYW5hbHlzaXNzZXJ2aWNlcy8yMDEyL2VuZ2luZS80MDAvNDAwIiB4bWxuczpkd2Q9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vRGF0YVdhcmVob3VzZS9EZXNpZ25lci8xLjAiPg0KICA8RW5hYmxlZD5mYWxzZTwvRW5hYmxlZD4NCiAgPFByb2plY3ROYW1lPjwvUHJvamVjdE5hbWU+DQogIDxBdXhQYXRoPjwvQXV4UGF0aD4NCiAgPExvY2FsUGF0aD48L0xvY2FsUGF0aD4NCiAgPFByb3ZpZGVyPjwvUHJvdmlkZXI+DQo8L1NvdXJjZUNvbnRyb2xJbmZvPg==</State>
   <DataSources>
     <ProjectItem>
-      <Name>ReportServer.rds</Name>
-      <FullPath>ReportServer.rds</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>AdventureWorks2012.rds</Name>
       <FullPath>AdventureWorks2012.rds</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>ReportServer.rds</Name>
+      <FullPath>ReportServer.rds</FullPath>
+    </ProjectItem>
   </DataSources>
-  <DataSets />
+  <DataSets>
+    <ProjectItem>
+      <Name>OrderDetailsSummary.rsd</Name>
+      <FullPath>OrderDetailsSummary.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>OrderSummary.rsd</Name>
+      <FullPath>OrderSummary.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>ReportConfig.ReportDetails.rsd</Name>
+      <FullPath>ReportConfig.ReportDetails.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>ReportConfig_TablixHeaderFormatting.rsd</Name>
+      <FullPath>ReportConfig_TablixHeaderFormatting.rsd</FullPath>
+    </ProjectItem>
+  </DataSets>
   <Reports>
     <ProjectItem>
-      <Name>AW.SalesReport.rdl</Name>
-      <FullPath>AW.SalesReport.rdl</FullPath>
+      <Name>AW.OrderDetailsSummaryReport.rdl</Name>
+      <FullPath>AW.OrderDetailsSummaryReport.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>AW.OrderSummary.rdl</Name>
+      <FullPath>AW.OrderSummary.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>AWSalesReport.rdl</Name>
+      <FullPath>AWSalesReport.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
@@ -37,6 +62,7 @@
       <Options>
         <OutputPath>bin\DebugLocal</OutputPath>
         <TargetServerVersion>SSRS2008R2</TargetServerVersion>
+        <TargetServerURL>http://localhost:8080/Reportserver_SQL2012</TargetServerURL>
         <TargetFolder>Report.Samples</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
         <TargetDatasetFolder>Datasets</TargetDatasetFolder>

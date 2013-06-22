@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <DataSet Name="">
+    <Query>
+      <DataSourceReference>AdventureWorks2012</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@CalendarPeriod">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT SalesHead.SalesOrderNumber, CAST(SalesHead.OrderDate AS DATE) AS OrderDate,
+    CAST(SalesHead.DueDate AS DATE) AS DueDate, CAST(SalesHead.ShipDate AS DATE) AS ShipDate,
+    SalesHead.TotalDue, SalesHead.TaxAmt, SalesHead.SubTotal
+FROM Sales.SalesOrderHeader AS SalesHead
+WHERE CAST(YEAR(SalesHead.ShipDate) AS NVARCHAR) + N'-' + CAST(MONTH(SalesHead.ShipDate) AS NVARCHAR) = @CalendarPeriod
+;</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="SalesOrderNumber">
+        <DataField>SalesOrderNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="OrderDate">
+        <DataField>OrderDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="DueDate">
+        <DataField>DueDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="ShipDate">
+        <DataField>ShipDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="TotalDue">
+        <DataField>TotalDue</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="TaxAmt">
+        <DataField>TaxAmt</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="SubTotal">
+        <DataField>SubTotal</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

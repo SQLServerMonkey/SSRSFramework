@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <DataSet Name="">
+    <Query>
+      <DataSourceReference>ReportServer</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@RDLName">
+          <DefaultValue>=Globals!ReportName</DefaultValue>
+          <ReadOnly>true</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT ReportDetail.ReportTitle, ReportDetail.ReportSubTitle,
+    ReportClass.ClassificationName AS ReportClassification,
+    ReportFont.FontFamilyName AS ReportFontName,
+    ReportLogo.ImageName AS ReportLogoName, Mime.TypeClass AS MIMEClass,
+    Mime.TypeName AS MIMEName, ReportLogo.ImageLocation
+FROM Custom.ReportDetail AS ReportDetail
+JOIN Custom.ReportClassification AS ReportClass ON ReportDetail.ReportClassificationID = ReportClass.ReportClassificationID
+JOIN Custom.FontFamily AS ReportFont ON ReportDetail.FontFamilyID = ReportFont.FontFamilyId
+JOIN Custom.ReportImageLibrary AS ReportLogo ON ReportDetail.ReportImageLibraryID = ReportLogo.ReportImageLibraryID
+JOIN Custom.MIMEType AS Mime ON ReportLogo.MIMETypeid = Mime.MIMETypeID
+WHERE ReportDetail.RDLName = @RDLName
+;</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="ReportTitle">
+        <DataField>ReportTitle</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ReportSubTitle">
+        <DataField>ReportSubTitle</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ReportClassification">
+        <DataField>ReportClassification</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ReportFontName">
+        <DataField>ReportFontName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ReportLogoName">
+        <DataField>ReportLogoName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="MIMEClass">
+        <DataField>MIMEClass</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="MIMEName">
+        <DataField>MIMEName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ImageLocation">
+        <DataField>ImageLocation</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <DataSet Name="">
+    <Query>
+      <DataSourceReference>AdventureWorks2012</DataSourceReference>
+      <CommandText>SELECT CAST(YEAR(SalesHead.ShipDate) AS NVARCHAR) + N'-' + CAST(MONTH(SalesHead.ShipDate) AS NVARCHAR) AS Period,
+    COUNT(SalesHead.SalesOrderID) AS OrderCount, SUM(SalesHead.TotalDue) AS OrderAmountSum
+FROM sales.SalesOrderHeader SalesHead
+GROUP BY CAST(YEAR(SalesHead.ShipDate) AS NVARCHAR) + N'-' + CAST(MONTH(SalesHead.ShipDate) AS NVARCHAR)
+ORDER BY Period
+;</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Period">
+        <DataField>Period</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="OrderCount">
+        <DataField>OrderCount</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="OrderAmountSum">
+        <DataField>OrderAmountSum</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

@@ -1,7 +1,5 @@
 SET IDENTITY_INSERT [Custom].[ColourPalette] ON
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (-1, N'None', N'#ffffff')
-SET IDENTITY_INSERT [Custom].[ColourPalette] OFF
-SET IDENTITY_INSERT [Custom].[ColourPalette] ON
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (1, N'Black', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (2, N'DimGray', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (3, N'Gray', N'#000000')
@@ -10,7 +8,6 @@ INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHe
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (6, N'LightGray', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (7, N'Gainsboro', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (8, N'WhiteSmoke', N'#000000')
-INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (9, N'White', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (10, N'RoseyBrown', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (11, N'IndianRed', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (12, N'Brown', N'#000000')
@@ -107,7 +104,6 @@ INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHe
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (103, N'SlateGray', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (104, N'LightSlateGray', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (105, N'LightSteelBlue', N'#000000')
-INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (106, N'CornflowerBlue', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (107, N'RoyalBlue', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (108, N'MidnightBlue', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (109, N'Lavender', N'#000000')
@@ -141,4 +137,8 @@ INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHe
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (137, N'Crimson', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (138, N'Pink', N'#000000')
 INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (139, N'LightPink', N'#000000')
+SET IDENTITY_INSERT [Custom].[ColourPalette] OFF
+SET IDENTITY_INSERT [Custom].[ColourPalette] ON
+INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (9, N'White', N'#ffffff')
+INSERT INTO [Custom].[ColourPalette] ([ColourPaletteID], [ColourName], [ColourHex]) VALUES (106, N'CornflowerBlue', N'#6495ED')
 SET IDENTITY_INSERT [Custom].[ColourPalette] OFF

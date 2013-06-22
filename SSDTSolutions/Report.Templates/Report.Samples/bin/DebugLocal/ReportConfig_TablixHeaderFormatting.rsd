@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <DataSet Name="">
+    <Query>
+      <DataSourceReference>ReportServer</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@RDLName">
+          <DefaultValue>=Globals!ReportName</DefaultValue>
+          <ReadOnly>true</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT HeaderColour.ColourName AS TablixHeaderBackgroundColourName, HeaderColour.ColourHex AS TablixHeaderBackgroundColourHex,
+    HeaderTextColour.ColourName AS TablixHeaderTextColourName, HeaderTextColour.ColourHex AS TablixHeaderTextColourHex,
+    HeaderFontFamily.FontFamilyName AS TablixHeaderFontFamilyName, HeaderFontWeight.FontWeightName AS TablixHeaderFontWeightName,
+    TablixConfig.TablixHeaderFontSize
+FROM Custom.ReportDetail AS ReportDetail
+JOIN Custom.TablixConfiguration AS TablixConfig ON ReportDetail.ReportTablixConfigurationID = TablixConfig.TablixConfigurationID
+JOIN Custom.ColourPalette AS HeaderColour ON TablixConfig.TablixHeaderBackgroundColourPaletteID = HeaderColour.ColourPaletteID
+JOIN Custom.ColourPalette AS HeaderTextColour ON TablixConfig.TablixHeaderTextColourPaletteID = HeaderTextColour.ColourPaletteID
+JOIN Custom.FontFamily AS HeaderFontFamily ON TablixConfig.TablixHeaderFontFamilyID = HeaderFontFamily.FontFamilyId
+JOIN Custom.FontWeight AS HeaderFontWeight ON TablixConfig.TablixHeaderFontWeightID = HeaderFontWeight.FontWeightID
+WHERE ReportDetail.RDLName = @RDLName
+;</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="TablixHeaderBackgroundColourName">
+        <DataField>TablixHeaderBackgroundColourName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="TablixHeaderBackgroundColourHex">
+        <DataField>TablixHeaderBackgroundColourHex</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="TablixHeaderTextColourName">
+        <DataField>TablixHeaderTextColourName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="TablixHeaderTextColourHex">
+        <DataField>TablixHeaderTextColourHex</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="TablixHeaderFontFamilyName">
+        <DataField>TablixHeaderFontFamilyName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="TablixHeaderFontWeightName">
+        <DataField>TablixHeaderFontWeightName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="TablixHeaderFontSize">
+        <DataField>TablixHeaderFontSize</DataField>
+        <rd:TypeName>System.Byte</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>
