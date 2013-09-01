@@ -1362,7 +1362,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                     <TextRun>
                                       <Value>=Fields!SubTotal.Value</Value>
                                       <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                        <FontFamily>Trebuchet MS</FontFamily>
                                         <Format>C2</Format>
                                       </Style>
                                     </TextRun>
@@ -2056,7 +2056,12 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
         <TopMargin>2cm</TopMargin>
         <BottomMargin>2cm</BottomMargin>
         <ColumnSpacing>0.13cm</ColumnSpacing>
-        <Style />
+        <Style>
+          <Border>
+            <Color>Brown</Color>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Page>
     </ReportSection>
   </ReportSections>
