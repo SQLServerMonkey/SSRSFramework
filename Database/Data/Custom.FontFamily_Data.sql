@@ -1,4 +1,19 @@
 SET IDENTITY_INSERT [Custom].[FontFamily] ON
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (56, N'ReportDefault')
+SET IDENTITY_INSERT [Custom].[FontFamily] OFF
+SET IDENTITY_INSERT [Custom].[FontFamily] ON
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (1, N'Arial')
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (2, N'Arial Black')
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (3, N'Arial Narrow')
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (4, N'Arial Rounded MT Bold')
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (5, N'Arial Unicode MS')
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (6, N'Calibri')
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (7, N'Calibri Light')
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (8, N'Cambria')
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (9, N'Comic Sans MS')
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (10, N'Times New Roman')
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (11, N'Verdana')
+INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (12, N'Wingdings')
 INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (13, N'Agency FB')
 INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (14, N'Aharoni')
 INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (15, N'Aldhabi')
@@ -42,18 +57,4 @@ INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (52,
 INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (53, N'Segoe UI Semilight')
 INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (54, N'Segoe UI Symbol')
 INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (55, N'Trebuchet MS')
-SET IDENTITY_INSERT [Custom].[FontFamily] OFF
-SET IDENTITY_INSERT [Custom].[FontFamily] ON
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (1, N'Arial')
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (2, N'Arial Black')
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (3, N'Arial Narrow')
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (4, N'Arial Rounded MT Bold')
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (5, N'Arial Unicode MS')
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (6, N'Calibri')
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (7, N'Calibri Light')
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (8, N'Cambria')
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (9, N'Comic Sans MS')
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (10, N'Times New Roman')
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (11, N'Verdana')
-INSERT INTO [Custom].[FontFamily] ([FontFamilyId], [FontFamilyName]) VALUES (12, N'Wingdings')
 SET IDENTITY_INSERT [Custom].[FontFamily] OFF

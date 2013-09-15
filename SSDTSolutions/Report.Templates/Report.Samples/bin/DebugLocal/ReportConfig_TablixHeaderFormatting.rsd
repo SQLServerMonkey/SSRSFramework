@@ -12,11 +12,18 @@
           <rd:DbType>String</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT HeaderColour.ColourName AS TablixHeaderBackgroundColourName, HeaderColour.ColourHex AS TablixHeaderBackgroundColourHex,
-    HeaderTextColour.ColourName AS TablixHeaderTextColourName, HeaderTextColour.ColourHex AS TablixHeaderTextColourHex,
-    HeaderFontFamily.FontFamilyName AS TablixHeaderFontFamilyName, HeaderFontWeight.FontWeightName AS TablixHeaderFontWeightName,
+      <CommandText>SELECT HeaderColour.ColourName AS TablixHeaderBackgroundColourName,
+    HeaderColour.ColourHex AS TablixHeaderBackgroundColourHex,
+    HeaderTextColour.ColourName AS TablixHeaderTextColourName,
+    HeaderTextColour.ColourHex AS TablixHeaderTextColourHex,
+    CASE HeaderFontFamily.FontFamilyName
+        WHEN 'ReportDefault' THEN ReportFont.FontFamilyName
+        ELSE HeaderFontFamily.FontFamilyName
+    END AS TablixHeaderFontFamilyName,
+    HeaderFontWeight.FontWeightName AS TablixHeaderFontWeightName,
     TablixConfig.TablixHeaderFontSize
 FROM Custom.ReportDetail AS ReportDetail
+JOIN Custom.FontFamily AS ReportFont ON ReportDetail.FontFamilyID = ReportFont.FontFamilyID
 JOIN Custom.TablixConfiguration AS TablixConfig ON ReportDetail.ReportTablixConfigurationID = TablixConfig.TablixConfigurationID
 JOIN Custom.ColourPalette AS HeaderColour ON TablixConfig.TablixHeaderBackgroundColourPaletteID = HeaderColour.ColourPaletteID
 JOIN Custom.ColourPalette AS HeaderTextColour ON TablixConfig.TablixHeaderTextColourPaletteID = HeaderTextColour.ColourPaletteID

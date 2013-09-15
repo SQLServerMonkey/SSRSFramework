@@ -3,17 +3,21 @@
   <DataSet Name="">
     <Query>
       <DataSourceReference>AdventureWorks2012</DataSourceReference>
-      <CommandText>SELECT CAST(YEAR(SalesHead.ShipDate) AS NVARCHAR) + N'-' + CAST(MONTH(SalesHead.ShipDate) AS NVARCHAR) AS Period,
+      <CommandText>SELECT DATEPART(YY,SalesHead.ShipDate) AS PeriodShipped_Year, DATEPART(MM,SalesHead.ShipDate) AS PeriodShipped_Month,
     COUNT(SalesHead.SalesOrderID) AS OrderCount, SUM(SalesHead.TotalDue) AS OrderAmountSum
 FROM sales.SalesOrderHeader SalesHead
-GROUP BY CAST(YEAR(SalesHead.ShipDate) AS NVARCHAR) + N'-' + CAST(MONTH(SalesHead.ShipDate) AS NVARCHAR)
-ORDER BY Period
+GROUP BY DATEPART(YYYY,SalesHead.ShipDate), DATEPART(MM,SalesHead.ShipDate)
+ORDER BY DATEPART(YYYY,SalesHead.ShipDate), DATEPART(MM,SalesHead.ShipDate)
 ;</CommandText>
     </Query>
     <Fields>
-      <Field Name="Period">
-        <DataField>Period</DataField>
-        <rd:TypeName>System.String</rd:TypeName>
+      <Field Name="PeriodShipped_Year">
+        <DataField>PeriodShipped_Year</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="PeriodShipped_Month">
+        <DataField>PeriodShipped_Month</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
       </Field>
       <Field Name="OrderCount">
         <DataField>OrderCount</DataField>

@@ -264,7 +264,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Product ID</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
                                     <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
                                     <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
                                     <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
@@ -303,7 +303,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Order Qty</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
                                     <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
                                     <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
                                     <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
@@ -339,7 +339,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Product Name</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
                                     <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
                                     <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
                                     <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
@@ -375,7 +375,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Product Size</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
                                     <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
                                     <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
                                     <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
@@ -414,7 +414,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Unit Price</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
                                     <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
                                     <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
                                     <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
@@ -453,7 +453,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Unit Price Discount</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
                                     <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
                                     <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
                                     <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
@@ -492,7 +492,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                                 <TextRun>
                                   <Value>Line Total</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
                                     <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
                                     <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
                                     <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
@@ -1805,14 +1805,14 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Image Name="AdventureWorksLogo">
+            <Image Name="AWLogo01">
               <Source>External</Source>
               <Value>=First(Fields!ImageLocation.Value, "ReportConfig_ReportDetails")</Value>
               <Sizing>FitProportional</Sizing>
-              <Top>0.36724cm</Top>
-              <Left>21.41627cm</Left>
-              <Height>1.99637cm</Height>
-              <Width>6.0966cm</Width>
+              <Top>0.3937cm</Top>
+              <Left>21.38981cm</Left>
+              <Height>1.99638cm</Height>
+              <Width>6.12306cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>

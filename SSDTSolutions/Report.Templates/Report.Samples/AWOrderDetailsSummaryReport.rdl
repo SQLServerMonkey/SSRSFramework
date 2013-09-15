@@ -6,8 +6,11 @@
       <SharedDataSet>
         <SharedDataSetReference>OrderDetailsSummary</SharedDataSetReference>
         <QueryParameters>
-          <QueryParameter Name="@CalendarPeriod">
-            <Value>=Parameters!CalendarPeriod.Value</Value>
+          <QueryParameter Name="@YearShipped">
+            <Value>=Parameters!YearShipped.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@MonthShipped">
+            <Value>=Parameters!MonthShipped.Value</Value>
           </QueryParameter>
         </QueryParameters>
       </SharedDataSet>
@@ -521,7 +524,7 @@
                             <Actions>
                               <Action>
                                 <Drillthrough>
-                                  <ReportName>AW.SalesReport</ReportName>
+                                  <ReportName>AWSalesReport</ReportName>
                                   <Parameters>
                                     <Parameter Name="SalesOrderNumber">
                                       <Value>=Fields!SalesOrderNumber.Value</Value>
@@ -1248,7 +1251,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Variables!Classification.Value</Value>
+                      <Value>Company Confidential</Value>
                       <Style>
                         <FontFamily>Verdana</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -1279,8 +1282,8 @@
               </Style>
             </Textbox>
             <Image Name="AdventureWorksLogo">
-              <Source>External</Source>
-              <Value>file:///C:/Users/jmartin/Documents/GitHub/SSRSFramework/SSDTSolutions/Report.Templates/Images/AdventureWorksLogo.jpg</Value>
+              <Source>Embedded</Source>
+              <Value>AdventureWorksLogo</Value>
               <Sizing>FitProportional</Sizing>
               <Top>0.27181cm</Top>
               <Left>21.31362cm</Left>
@@ -1312,7 +1315,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Variables!Classification.Value</Value>
+                      <Value>=(ReportItems!Textbox2.Value)</Value>
                       <Style>
                         <FontFamily>Verdana</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -1534,9 +1537,13 @@
     </ReportSection>
   </ReportSections>
   <ReportParameters>
-    <ReportParameter Name="CalendarPeriod">
-      <DataType>String</DataType>
-      <Prompt>Calendar Period</Prompt>
+    <ReportParameter Name="YearShipped">
+      <DataType>Integer</DataType>
+      <Prompt>Year Shipped</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="MonthShipped">
+      <DataType>Integer</DataType>
+      <Prompt>Month Shipped</Prompt>
     </ReportParameter>
   </ReportParameters>
   <EmbeddedImages>

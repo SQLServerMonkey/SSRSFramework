@@ -4,18 +4,25 @@
     <Query>
       <DataSourceReference>AdventureWorks2012</DataSourceReference>
       <DataSetParameters>
-        <DataSetParameter Name="@CalendarPeriod">
+        <DataSetParameter Name="@YearShipped">
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
-          <rd:DbType>String</rd:DbType>
+          <rd:DbType>Int32</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@MonthShipped">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Int32</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
       <CommandText>SELECT SalesHead.SalesOrderNumber, CAST(SalesHead.OrderDate AS DATE) AS OrderDate,
     CAST(SalesHead.DueDate AS DATE) AS DueDate, CAST(SalesHead.ShipDate AS DATE) AS ShipDate,
     SalesHead.TotalDue, SalesHead.TaxAmt, SalesHead.SubTotal
 FROM Sales.SalesOrderHeader AS SalesHead
-WHERE CAST(YEAR(SalesHead.ShipDate) AS NVARCHAR) + N'-' + CAST(MONTH(SalesHead.ShipDate) AS NVARCHAR) = @CalendarPeriod
+WHERE DATEPART(YY,SalesHead.ShipDate) = @YearShipped
+    AND DATEPART(MM,SalesHead.ShipDate) = @MonthShipped
 ;</CommandText>
     </Query>
     <Fields>

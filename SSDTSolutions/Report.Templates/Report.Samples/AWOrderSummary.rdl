@@ -1,218 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
   <AutoRefresh>0</AutoRefresh>
-  <DataSources>
-    <DataSource Name="AdventureWorks2012">
-      <DataSourceReference>AdventureWorks2012</DataSourceReference>
-      <rd:SecurityType>None</rd:SecurityType>
-      <rd:DataSourceID>7b370228-0310-4463-aaf5-be31e1feca71</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
   <DataSets>
-    <DataSet Name="ReportData_SalesHeader">
-      <Query>
-        <DataSourceName>AdventureWorks2012</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="@SalesOrderNumber">
-            <Value>=Parameters!SalesOrderNumber.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandText>SELECT SalesHead.AccountNumber, SalesHead.SalesOrderNumber,
-    SalesHead.OrderDate, SalesHead.DueDate,
-    SalesHead.TotalDue, SalesHead.Freight, SalesHead.TaxAmt, SalesHead.SubTotal,
-    Person.FirstName + ' ' + Person.LastName AS Customer,
-    BillingAddr.AddressLine1, BillingAddr.AddressLine2, BillingAddr.City, BillingAddr.PostalCode,
-    CASE SalesHead.OnlineOrderFlag
-        WHEN 1 THEN N'Website'
-        ELSE N'Interactive'
-    END AS OrderType
-FROM Sales.SalesOrderHeader AS SalesHead
-JOIN sales.Customer AS Cust ON SalesHead.CustomerID = Cust.CustomerID
-JOIN Person.Person AS Person ON Cust.PersonID = Person.BusinessEntityID
-JOIN Person.Address AS BillingAddr ON SalesHead.BillToAddressID = BillingAddr.AddressID
-WHERE SalesHead.SalesOrderNumber = @SalesOrderNumber
-;</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="AccountNumber">
-          <DataField>AccountNumber</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SalesOrderNumber">
-          <DataField>SalesOrderNumber</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="OrderDate">
-          <DataField>OrderDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="DueDate">
-          <DataField>DueDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="TotalDue">
-          <DataField>TotalDue</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TaxAmt">
-          <DataField>TaxAmt</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Freight">
-          <DataField>Freight</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SubTotal">
-          <DataField>SubTotal</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Customer">
-          <DataField>Customer</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="AddressLine1">
-          <DataField>AddressLine1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="AddressLine2">
-          <DataField>AddressLine2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="City">
-          <DataField>City</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PostalCode">
-          <DataField>PostalCode</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="OrderType">
-          <DataField>OrderType</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="ReportData_SalesDetail">
-      <Query>
-        <DataSourceName>AdventureWorks2012</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="@SalesOrderNumber">
-            <Value>=Parameters!SalesOrderNumber.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandText>SELECT SalesDetail.ProductID, SalesDetail.OrderQty, SalesDetail.UnitPrice, SalesDetail.UnitPriceDiscount, SalesDetail.LineTotal,
-    Prod.Name AS ProductName, ISNULL(Prod.Size,N'') AS ProductSize, SalesDetail.SalesOrderDetailID
-FROM Sales.SalesOrderDetail AS SalesDetail
-JOIN Production.Product AS Prod ON SalesDetail.ProductID = Prod.ProductID
-WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE SalesOrderNumber = @SalesOrderNumber)
-;</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="ProductID">
-          <DataField>ProductID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="UnitPrice">
-          <DataField>UnitPrice</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="OrderQty">
-          <DataField>OrderQty</DataField>
-          <rd:TypeName>System.Int16</rd:TypeName>
-        </Field>
-        <Field Name="UnitPriceDiscount">
-          <DataField>UnitPriceDiscount</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="LineTotal">
-          <DataField>LineTotal</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="ProductName">
-          <DataField>ProductName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ProductSize">
-          <DataField>ProductSize</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SalesOrderDetailID">
-          <DataField>SalesOrderDetailID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="ReportConfig_ReportDetails">
+    <DataSet Name="OrderSummary">
       <SharedDataSet>
-        <SharedDataSetReference>ReportConfig.ReportDetails</SharedDataSetReference>
+        <SharedDataSetReference>OrderSummary</SharedDataSetReference>
       </SharedDataSet>
       <Fields>
-        <Field Name="ReportTitle">
-          <DataField>ReportTitle</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="PeriodShipped_Year">
+          <DataField>PeriodShipped_Year</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="ReportSubTitle">
-          <DataField>ReportSubTitle</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="OrderCount">
+          <DataField>OrderCount</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="ReportClassification">
-          <DataField>ReportClassification</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="PeriodShipped_Month">
+          <DataField>PeriodShipped_Month</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="ReportFontName">
-          <DataField>ReportFontName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ReportLogoName">
-          <DataField>ReportLogoName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MIMEClass">
-          <DataField>MIMEClass</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MIMEName">
-          <DataField>MIMEName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ImageLocation">
-          <DataField>ImageLocation</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="ReportConfig_TablixHeaderFormatting">
-      <SharedDataSet>
-        <SharedDataSetReference>ReportConfig_TablixHeaderFormatting</SharedDataSetReference>
-      </SharedDataSet>
-      <Fields>
-        <Field Name="TablixHeaderBackgroundColourName">
-          <DataField>TablixHeaderBackgroundColourName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TablixHeaderBackgroundColourHex">
-          <DataField>TablixHeaderBackgroundColourHex</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TablixHeaderTextColourName">
-          <DataField>TablixHeaderTextColourName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TablixHeaderTextColourHex">
-          <DataField>TablixHeaderTextColourHex</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TablixHeaderFontFamilyName">
-          <DataField>TablixHeaderFontFamilyName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TablixHeaderFontWeightName">
-          <DataField>TablixHeaderFontWeightName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TablixHeaderFontSize">
-          <DataField>TablixHeaderFontSize</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
+        <Field Name="OrderAmountSum">
+          <DataField>OrderAmountSum</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -221,29 +30,17 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
     <ReportSection>
       <Body>
         <ReportItems>
-          <Tablix Name="Tablix2">
+          <Tablix Name="Tablix1">
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.05562cm</Width>
+                  <Width>3.82292cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.94003cm</Width>
+                  <Width>4.37854cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>7.62001cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.68522cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>3.083cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>4.45917cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>3.24966cm</Width>
+                  <Width>4.98708cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -252,97 +49,21 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox7">
-                          <CanGrow>true</CanGrow>
-                          <UserSort>
-                            <SortExpression>=Fields!ProductID.Value</SortExpression>
-                          </UserSort>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Product ID</Value>
-                                  <Style>
-                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
-                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
-                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
-                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox7</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox42">
-                          <CanGrow>true</CanGrow>
-                          <UserSort>
-                            <SortExpression>=Fields!OrderQty.Value</SortExpression>
-                          </UserSort>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Order Qty</Value>
-                                  <Style>
-                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
-                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
-                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
-                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox42</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
                         <Textbox Name="Textbox9">
                           <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=CStr(Fields!PeriodShipped_Year.Value) + "-" + Right("0" + CStr(Fields!PeriodShipped_Month.Value),2)</SortExpression>
+                          </UserSort>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Product Name</Value>
+                                  <Value>Period</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
-                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
-                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
-                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
+                                    <FontFamily>Verdana</FontFamily>
+                                    <FontWeight>SemiBold</FontWeight>
+                                    <Color>White</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -355,7 +76,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
+                            <BackgroundColor>CornflowerBlue</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -368,17 +89,19 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                       <CellContents>
                         <Textbox Name="Textbox11">
                           <CanGrow>true</CanGrow>
+                          <UserSort>
+                            <SortExpression>=Fields!OrderCount.Value</SortExpression>
+                          </UserSort>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Product Size</Value>
+                                  <Value>Order Count</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
-                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
-                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
-                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
+                                    <FontFamily>Verdana</FontFamily>
+                                    <FontWeight>SemiBold</FontWeight>
+                                    <Color>White</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -391,7 +114,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
+                            <BackgroundColor>CornflowerBlue</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -402,113 +125,34 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox17">
+                        <Textbox Name="Textbox13">
                           <CanGrow>true</CanGrow>
                           <UserSort>
-                            <SortExpression>=Fields!UnitPrice.Value</SortExpression>
+                            <SortExpression>=Fields!OrderAmountSum.Value</SortExpression>
                           </UserSort>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Unit Price</Value>
+                                  <Value>Order Amount Sum</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
-                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
-                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
-                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
+                                    <FontFamily>Verdana</FontFamily>
+                                    <FontWeight>SemiBold</FontWeight>
+                                    <Color>White</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox17</rd:DefaultName>
+                          <rd:DefaultName>Textbox13</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox19">
-                          <CanGrow>true</CanGrow>
-                          <UserSort>
-                            <SortExpression>=Fields!UnitPriceDiscount.Value</SortExpression>
-                          </UserSort>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Unit Price Discount</Value>
-                                  <Style>
-                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
-                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
-                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
-                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox19</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox21">
-                          <CanGrow>true</CanGrow>
-                          <UserSort>
-                            <SortExpression>=Fields!LineTotal.Value</SortExpression>
-                          </UserSort>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Line Total</Value>
-                                  <Style>
-                                    <FontFamily>=First(Fields!TablixHeaderFontFamilyName.Value, "ReportConfig_TablixHeaderFormatting")</FontFamily>
-                                    <FontSize>=First(Fields!TablixHeaderFontSize.Value, "ReportConfig_TablixHeaderFormatting")</FontSize>
-                                    <FontWeight>=First(Fields!TablixHeaderFontWeightName.Value, "ReportConfig_TablixHeaderFormatting")</FontWeight>
-                                    <Color>=First(Fields!TablixHeaderTextColourName.Value, "ReportConfig_TablixHeaderFormatting")</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox21</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>=First(Fields!TablixHeaderBackgroundColourName.Value, "ReportConfig_TablixHeaderFormatting")</BackgroundColor>
+                            <BackgroundColor>CornflowerBlue</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -524,91 +168,42 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ProductID">
+                        <Textbox Name="Period">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ProductID.Value</Value>
+                                  <Value>=CStr(Fields!PeriodShipped_Year.Value) + "-" + Right("0" + CStr(Fields!PeriodShipped_Month.Value),2)</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>ProductID</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="OrderQty">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!OrderQty.Value</Value>
-                                  <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>OrderQty</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="ProductName">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!ProductName.Value</Value>
-                                  <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontFamily>Verdana</FontFamily>
+                                    <TextDecoration>Underline</TextDecoration>
+                                    <Color>Blue</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ProductName</rd:DefaultName>
+                          <rd:DefaultName>Period</rd:DefaultName>
+                          <ActionInfo>
+                            <Actions>
+                              <Action>
+                                <Drillthrough>
+                                  <ReportName>AWOrderDetailsSummaryReport</ReportName>
+                                  <Parameters>
+                                    <Parameter Name="YearShipped">
+                                      <Value>=Fields!PeriodShipped_Year.Value</Value>
+                                    </Parameter>
+                                    <Parameter Name="MonthShipped">
+                                      <Value>=Fields!PeriodShipped_Month.Value</Value>
+                                    </Parameter>
+                                  </Parameters>
+                                </Drillthrough>
+                              </Action>
+                            </Actions>
+                          </ActionInfo>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -624,25 +219,23 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ProductSize">
+                        <Textbox Name="OrderCount">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ProductSize.Value</Value>
+                                  <Value>=Fields!OrderCount.Value</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontFamily>Verdana</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
+                              <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ProductSize</rd:DefaultName>
+                          <rd:DefaultName>OrderCount</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -658,16 +251,16 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="UnitPrice">
+                        <Textbox Name="OrderAmountSum">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!UnitPrice.Value</Value>
+                                  <Value>=Fields!OrderAmountSum.Value</Value>
                                   <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                                    <FontFamily>Verdana</FontFamily>
                                     <Format>C2</Format>
                                   </Style>
                                 </TextRun>
@@ -675,73 +268,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>UnitPrice</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="UnitPriceDiscount">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!UnitPriceDiscount.Value</Value>
-                                  <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                    <Format>C2</Format>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>UnitPriceDiscount</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="LineTotal">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!LineTotal.Value</Value>
-                                  <Style>
-                                    <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                    <Format>C2</Format>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>LineTotal</rd:DefaultName>
+                          <rd:DefaultName>OrderAmountSum</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -761,10 +288,6 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
-                <TablixMember />
-                <TablixMember />
-                <TablixMember />
-                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -777,945 +300,14 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 </TablixMember>
                 <TablixMember>
                   <Group Name="Details" />
-                  <TablixMembers>
-                    <TablixMember />
-                  </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <RepeatColumnHeaders>true</RepeatColumnHeaders>
-            <DataSetName>ReportData_SalesDetail</DataSetName>
-            <SortExpressions>
-              <SortExpression>
-                <Value>=Fields!SalesOrderDetailID.Value</Value>
-              </SortExpression>
-            </SortExpressions>
-            <Top>5.92349cm</Top>
-            <Left>0.42016cm</Left>
+            <DataSetName>OrderSummary</DataSetName>
+            <Top>0.52599cm</Top>
+            <Left>0.31752cm</Left>
             <Height>1.2cm</Height>
-            <Width>27.09271cm</Width>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-            </Style>
-          </Tablix>
-          <Line Name="Line1">
-            <Top>5.7471cm</Top>
-            <Left>0.42016cm</Left>
-            <Height>0cm</Height>
-            <Width>27.09271cm</Width>
-            <ZIndex>1</ZIndex>
-            <Style>
-              <Border>
-                <Color>LightGrey</Color>
-                <Style>Solid</Style>
-              </Border>
-            </Style>
-          </Line>
-          <Tablix Name="Tablix3">
-            <TablixBody>
-              <TablixColumns>
-                <TablixColumn>
-                  <Width>27.09271cm</Width>
-                </TablixColumn>
-              </TablixColumns>
-              <TablixRows>
-                <TablixRow>
-                  <Height>5.39433cm</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Rectangle Name="Rectangle2">
-                          <ReportItems>
-                            <Textbox Name="Textbox25">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>Customer Name:</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <FontWeight>SemiBold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox25</rd:DefaultName>
-                              <Top>0.42898cm</Top>
-                              <Left>0.26458cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>3.69062cm</Width>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox26">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!Customer.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox26</rd:DefaultName>
-                              <Top>0.42898cm</Top>
-                              <Left>4.13159cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>6.78625cm</Width>
-                              <ZIndex>1</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox27">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>Account Number:</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <FontWeight>SemiBold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox27</rd:DefaultName>
-                              <Top>1.20537cm</Top>
-                              <Left>0.26458cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>3.69062cm</Width>
-                              <ZIndex>2</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox28">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!AccountNumber.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox28</rd:DefaultName>
-                              <Top>1.20537cm</Top>
-                              <Left>4.15804cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>6.78626cm</Width>
-                              <ZIndex>3</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox29">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>Address:</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <FontWeight>SemiBold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox29</rd:DefaultName>
-                              <Top>1.98176cm</Top>
-                              <Left>0.26458cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>3.69061cm</Width>
-                              <ZIndex>4</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox30">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!AddressLine1.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox30</rd:DefaultName>
-                              <Top>1.98176cm</Top>
-                              <Left>4.15804cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>6.78626cm</Width>
-                              <ZIndex>5</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox31">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!AddressLine2.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox30</rd:DefaultName>
-                              <Top>2.75815cm</Top>
-                              <Left>4.15805cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>6.78626cm</Width>
-                              <ZIndex>6</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox32">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!City.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox30</rd:DefaultName>
-                              <Top>3.53454cm</Top>
-                              <Left>4.15805cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>6.78626cm</Width>
-                              <ZIndex>7</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox33">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!PostalCode.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox30</rd:DefaultName>
-                              <Top>4.31092cm</Top>
-                              <Left>4.15804cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>6.78626cm</Width>
-                              <ZIndex>8</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox34">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>Order Date:</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <FontWeight>SemiBold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox25</rd:DefaultName>
-                              <Top>1.98176cm</Top>
-                              <Left>11.80688cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>2.94979cm</Width>
-                              <ZIndex>9</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox35">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>Due Date:</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <FontWeight>SemiBold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox25</rd:DefaultName>
-                              <Top>2.75815cm</Top>
-                              <Left>11.80688cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>2.94979cm</Width>
-                              <ZIndex>10</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox3">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!OrderDate.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <Format>d</Format>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style>
-                                    <TextAlign>Left</TextAlign>
-                                  </Style>
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox3</rd:DefaultName>
-                              <Top>1.9553cm</Top>
-                              <Left>14.93306cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>3.69062cm</Width>
-                              <ZIndex>11</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox4">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!DueDate.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <Format>d</Format>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style>
-                                    <TextAlign>Left</TextAlign>
-                                  </Style>
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox3</rd:DefaultName>
-                              <Top>2.73169cm</Top>
-                              <Left>14.93306cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>3.69062cm</Width>
-                              <ZIndex>12</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox5">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>Sub-Total:</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <FontWeight>SemiBold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox5</rd:DefaultName>
-                              <Top>0.40252cm</Top>
-                              <Left>19.55271cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>2.5cm</Width>
-                              <ZIndex>13</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox6">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>Tax:</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <FontWeight>SemiBold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox5</rd:DefaultName>
-                              <Top>1.9553cm</Top>
-                              <Left>19.5527cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>2.5cm</Width>
-                              <ZIndex>14</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox8">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>Total Due:</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <FontWeight>SemiBold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox5</rd:DefaultName>
-                              <Top>2.73169cm</Top>
-                              <Left>19.5527cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>2.5cm</Width>
-                              <ZIndex>15</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox10">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!SubTotal.Value</Value>
-                                      <Style>
-                                        <FontFamily>Trebuchet MS</FontFamily>
-                                        <Format>C2</Format>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox10</rd:DefaultName>
-                              <Top>0.40252cm</Top>
-                              <Left>22.22909cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>3.92875cm</Width>
-                              <ZIndex>16</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox12">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!TaxAmt.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <Format>C2</Format>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox10</rd:DefaultName>
-                              <Top>1.9553cm</Top>
-                              <Left>22.22909cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>3.92875cm</Width>
-                              <ZIndex>17</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Color>DarkGray</Color>
-                                  <Style>None</Style>
-                                </Border>
-                                <BottomBorder>
-                                  <Style>Solid</Style>
-                                </BottomBorder>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox13">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!TotalDue.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <Format>C2</Format>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox10</rd:DefaultName>
-                              <Top>2.73169cm</Top>
-                              <Left>22.22908cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>3.92875cm</Width>
-                              <ZIndex>18</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Color>DarkGray</Color>
-                                  <Style>None</Style>
-                                </Border>
-                                <TopBorder>
-                                  <Style>Solid</Style>
-                                </TopBorder>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Line Name="Line2">
-                              <Top>0.40252cm</Top>
-                              <Left>11.43cm</Left>
-                              <Height>4.48194cm</Height>
-                              <Width>0cm</Width>
-                              <ZIndex>19</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>Solid</Style>
-                                </Border>
-                              </Style>
-                            </Line>
-                            <Line Name="Line3">
-                              <Top>0.40252cm</Top>
-                              <Left>19.1026cm</Left>
-                              <Height>4.48194cm</Height>
-                              <Width>0cm</Width>
-                              <ZIndex>20</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>Solid</Style>
-                                </Border>
-                              </Style>
-                            </Line>
-                            <Textbox Name="Textbox23">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>Order No. :</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <FontWeight>SemiBold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox23</rd:DefaultName>
-                              <Top>0.42898cm</Top>
-                              <Left>11.80688cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>2.94979cm</Width>
-                              <ZIndex>21</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox24">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>Order Type:</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <FontWeight>SemiBold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox24</rd:DefaultName>
-                              <Top>1.20537cm</Top>
-                              <Left>11.80688cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>2.94979cm</Width>
-                              <ZIndex>22</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox36">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!SalesOrderNumber.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox36</rd:DefaultName>
-                              <Top>0.42898cm</Top>
-                              <Left>14.93306cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>3.69062cm</Width>
-                              <ZIndex>23</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox37">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!OrderType.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox37</rd:DefaultName>
-                              <Top>1.17891cm</Top>
-                              <Left>14.93306cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>3.69062cm</Width>
-                              <ZIndex>24</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox38">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>Freight: </Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <FontWeight>SemiBold</FontWeight>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox38</rd:DefaultName>
-                              <Top>1.17891cm</Top>
-                              <Left>19.55271cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>2.5cm</Width>
-                              <ZIndex>25</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox39">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!Freight.Value</Value>
-                                      <Style>
-                                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
-                                        <Format>c2</Format>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox39</rd:DefaultName>
-                              <Top>1.17891cm</Top>
-                              <Left>22.22909cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>3.92875cm</Width>
-                              <ZIndex>26</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                          </ReportItems>
-                          <KeepTogether>true</KeepTogether>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>Solid</Style>
-                            </BottomBorder>
-                          </Style>
-                        </Rectangle>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-              </TablixRows>
-            </TablixBody>
-            <TablixColumnHierarchy>
-              <TablixMembers>
-                <TablixMember />
-              </TablixMembers>
-            </TablixColumnHierarchy>
-            <TablixRowHierarchy>
-              <TablixMembers>
-                <TablixMember>
-                  <Group Name="Details1" />
-                </TablixMember>
-              </TablixMembers>
-            </TablixRowHierarchy>
-            <DataSetName>ReportData_SalesHeader</DataSetName>
-            <Top>0.17639cm</Top>
-            <Left>0.42016cm</Left>
-            <Height>5.39433cm</Height>
-            <Width>27.09271cm</Width>
-            <ZIndex>2</ZIndex>
+            <Width>13.18854cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1723,7 +315,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>3in</Height>
+        <Height>1.27083in</Height>
         <Style />
       </Body>
       <Width>11in</Width>
@@ -1740,11 +332,10 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Parameters!ReportConfig_ReportTitle.Value</Value>
+                      <Value>Sales Order Summary</Value>
                       <Style>
-                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                        <FontFamily>Verdana</FontFamily>
                         <FontSize>26pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1754,8 +345,8 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0.3937cm</Top>
-              <Left>0.3937cm</Left>
+              <Top>0.27181cm</Top>
+              <Left>0.3175cm</Left>
               <Height>1.31438cm</Height>
               <Width>20.81972cm</Width>
               <Style>
@@ -1775,9 +366,9 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Parameters!ReportConfig_ReportClassification.Value</Value>
+                      <Value>Company Confidential</Value>
                       <Style>
-                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                        <FontFamily>Verdana</FontFamily>
                         <FontSize>8pt</FontSize>
                         <FontWeight>SemiBold</FontWeight>
                         <Color>Gray</Color>
@@ -1790,8 +381,8 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>1.88447cm</Top>
-              <Left>0.3937cm</Left>
+              <Top>1.76258cm</Top>
+              <Left>0.3175cm</Left>
               <Height>0.50561cm</Height>
               <Width>20.81972cm</Width>
               <ZIndex>1</ZIndex>
@@ -1805,14 +396,14 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Image Name="AWLogo01">
-              <Source>External</Source>
-              <Value>=First(Fields!ImageLocation.Value, "ReportConfig_ReportDetails")</Value>
+            <Image Name="AdventureWorksLogo">
+              <Source>Embedded</Source>
+              <Value>AdventureWorksLogo</Value>
               <Sizing>FitProportional</Sizing>
-              <Top>0.3937cm</Top>
-              <Left>21.38981cm</Left>
-              <Height>1.99638cm</Height>
-              <Width>6.12306cm</Width>
+              <Top>0.27181cm</Top>
+              <Left>21.31362cm</Left>
+              <Height>1.99637cm</Height>
+              <Width>6.0966cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -1841,7 +432,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                     <TextRun>
                       <Value>=(ReportItems!Textbox2.Value)</Value>
                       <Style>
-                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                        <FontFamily>Verdana</FontFamily>
                         <FontSize>8pt</FontSize>
                         <FontWeight>SemiBold</FontWeight>
                         <Color>Gray</Color>
@@ -1854,8 +445,8 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.35574cm</Top>
-              <Left>0.42015cm</Left>
+              <Top>0.35844cm</Top>
+              <Left>0.31751cm</Left>
               <Height>0.5cm</Height>
               <Width>27.09272cm</Width>
               <Style>
@@ -1868,16 +459,16 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Textbox Name="Textbox15">
+            <Textbox Name="Textbox22">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Report Executed By: </Value>
+                      <Value>="Page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
                       <Style>
-                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                        <FontFamily>Verdana</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
@@ -1887,10 +478,10 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox15</rd:DefaultName>
-              <Top>1.03773cm</Top>
-              <Left>0.42016cm</Left>
+              <Top>1.68155cm</Top>
+              <Left>23.04933cm</Left>
               <Height>0.5cm</Height>
-              <Width>3.42604cm</Width>
+              <Width>4.36089cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -1902,29 +493,31 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Textbox Name="Textbox16">
+            <Textbox Name="Textbox20">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Report Executed At: </Value>
+                      <Value>=Globals!ExecutionTime</Value>
                       <Style>
-                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                        <FontFamily>Verdana</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox15</rd:DefaultName>
-              <Top>1.67885cm</Top>
-              <Left>0.42015cm</Left>
+              <Top>1.68155cm</Top>
+              <Left>3.91994cm</Left>
               <Height>0.5cm</Height>
-              <Width>3.42604cm</Width>
+              <Width>5.43687cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -1945,7 +538,7 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                     <TextRun>
                       <Value>=User!UserID</Value>
                       <Style>
-                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                        <FontFamily>Verdana</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
@@ -1957,8 +550,8 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox15</rd:DefaultName>
-              <Top>1.03773cm</Top>
-              <Left>4.02258cm</Left>
+              <Top>1.04043cm</Top>
+              <Left>3.91994cm</Left>
               <Height>0.5cm</Height>
               <Width>5.43687cm</Width>
               <ZIndex>3</ZIndex>
@@ -1972,31 +565,29 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Textbox Name="Textbox20">
+            <Textbox Name="Textbox15">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Globals!ExecutionTime</Value>
+                      <Value>Report Executed By: </Value>
                       <Style>
-                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                        <FontFamily>Verdana</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
+                  <Style />
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox15</rd:DefaultName>
-              <Top>1.67885cm</Top>
-              <Left>4.02258cm</Left>
+              <Top>1.04043cm</Top>
+              <Left>0.31752cm</Left>
               <Height>0.5cm</Height>
-              <Width>5.43687cm</Width>
+              <Width>3.42604cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
@@ -2008,16 +599,16 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Textbox Name="Textbox22">
+            <Textbox Name="Textbox16">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
+                      <Value>Report Executed At: </Value>
                       <Style>
-                        <FontFamily>=First(Fields!ReportFontName.Value, "ReportConfig_ReportDetails")</FontFamily>
+                        <FontFamily>Verdana</FontFamily>
                         <FontSize>8pt</FontSize>
                         <Color>Gray</Color>
                       </Style>
@@ -2027,10 +618,10 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox15</rd:DefaultName>
-              <Top>1.67885cm</Top>
-              <Left>23.15197cm</Left>
+              <Top>1.68155cm</Top>
+              <Left>0.31751cm</Left>
               <Height>0.5cm</Height>
-              <Width>4.3609cm</Width>
+              <Width>3.42604cm</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
@@ -2056,42 +647,10 @@ WHERE SalesOrderID = (SELECT SalesOrderID FROM Sales.SalesOrderHeader WHERE Sale
         <TopMargin>2cm</TopMargin>
         <BottomMargin>2cm</BottomMargin>
         <ColumnSpacing>0.13cm</ColumnSpacing>
-        <Style>
-          <Border>
-            <Color>Brown</Color>
-            <Style>None</Style>
-          </Border>
-        </Style>
+        <Style />
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParameters>
-    <ReportParameter Name="SalesOrderNumber">
-      <DataType>String</DataType>
-      <Prompt>Sales Order Number</Prompt>
-      <UsedInQuery>True</UsedInQuery>
-    </ReportParameter>
-    <ReportParameter Name="ReportConfig_ReportTitle">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <DataSetReference>
-          <DataSetName>ReportConfig_ReportDetails</DataSetName>
-          <ValueField>ReportTitle</ValueField>
-        </DataSetReference>
-      </DefaultValue>
-      <Hidden>true</Hidden>
-    </ReportParameter>
-    <ReportParameter Name="ReportConfig_ReportClassification">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <DataSetReference>
-          <DataSetName>ReportConfig_ReportDetails</DataSetName>
-          <ValueField>ReportClassification</ValueField>
-        </DataSetReference>
-      </DefaultValue>
-      <Hidden>true</Hidden>
-    </ReportParameter>
-  </ReportParameters>
   <EmbeddedImages>
     <EmbeddedImage Name="AdventureWorksLogo">
       <MIMEType>image/jpeg</MIMEType>
@@ -2200,44 +759,12 @@ CUIEAAAJB5H8sZ+YOurXGSNcmHtKXWYmTZS3Y5Ps0X40rvMTyr0AfoRBBBbwR28EbYoIWtjiiYiNa1jU
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcu93zU9l4WLQuLmpkMq1Jsu5i7Y7OvmxLTcszk2/JTbscEKgEgAAzOjdKZXVup8fp7Fs4r3ISpGxyoqtY30nyOp8GNiK53gQD9G9H6VxWlNNY/T2KZwWWPiSJir6T3b3yPp8KR6q53hUhLMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwet9X4vR+lcjqPJu/othEr+zRaOkkXzY4m/Ke9UagH5yaq1NldUaiv8/lZO0v8jM6aVUrwtrsaxla0axqI1qdSEoYoAAAuV3S+VPsHTj9Z5SHhy2cYjce16edFY14kcnUs6ojvmo3rUgWCCQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFYu+t/er2fp/s/8ACvaP7fgrX1+i9n2vRTsuLs/xvAESqgSAADNaK/u7/e7D/wB5OP2D63D7S4N/Y8acVfk/GptpWm0D9Lrf1f1eL1bg9X4G9j2dODgp5vDTZSm6hCXYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//2Q==</ImageData>
     </EmbeddedImage>
-    <EmbeddedImage Name="Adventureworkslogo2_2">
-      <MIMEType>image/jpeg</MIMEType>
-      <ImageData>/9j/4AAQSkZJRgABAQEAlgCWAAD/2wBDAAICAgICAQICAgIDAgIDAwYEAwMDAwcFBQQGCAcJCAgHCAgJCg0LCQoMCggICw8LDA0ODg8OCQsQERAOEQ0ODg7/2wBDAQIDAwMDAwcEBAcOCQgJDg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg7/wAARCAETAbwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiopJI44d7v5aCldIBwXn0owPWuT1Dxx4U0pJDea5aQlByhlGa851j9oL4eaTHl9RFz/1yeuKeMw1L45onnR7lxml47V8h6j+194GgEkdnpl5d4/5
-a+X+7rz++/bDn+2f6HpT+V/1yryp57l1PeZnz0z77z7UfhX5z6l+2B4g8r/iX6fHF/11irG/4bB8Z/8APnb/APfquT/WLLu5n9Ypn6Y/hRn2r8zv+GwfGf8Az52//fqtTTf2wPEnn/8AEw0+OWL/AKZRUf6x5d3D6xTP0e470nGa/P8Ag/bDuzefvdKcxf8AXKu/0/8Aa+8Hy4+36ReQf9NBHXVTz3Lqn2zTnpn2ERzwaTHPSvANF/aO+Hesfcvfs3/XWSvS9N+IXg/VYYpLPX7SXf0Tzea9OnjMNV+Coac6O37UVVgnt7mDzLeVJYvVKtV6CaZQUUUUwCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAZkelKMY9KxdX8QaToOkS3mqX8NnCg5MkgFfI/j/9rLRdLX7N4NhGrXWdnmSDivJxOPwuCX76ZlOagfZc00UEJknkSONepY15F4q+OPgHwxaXIk1mC6vYh/x7xnk1+aXir42+OPE+pSyXGsT2trJ/yztpa8lnvrie8luJJJJZZP8AWSS18Ji+K7aYeByzrn3V4i/bCuJreSLQ9E+z/wDTUy18/a5+0F8SNcmljk8QT2trJ/yzjrwuivj6+bZjiPjmcvtKhtX3iDVNRvJbi8vJLqWT/npWXJPI9Q0V4t2+pAu8UlFFIApd4qKR/Lhr6p/Z7+Ad/wCOtdtfFvii3e18OwS+ZaxSRf62vZy7LcRmE+WGxpTp+0PltH8ykr7Q/aJ/Z2n0aWXxr4Kt/N0//l9so/8AlnXxXHJ5h/55f9M6eY5ViMBPllsFSn7Mkpd4pKK8UzJo55Eq/a6rqFreRSW9xJayx/8ALSOsqindgey6H8dPiJoEMUen+IJ/K/55yV754Z/a/wBXsoIo9c0f7d/z0l82vh6ivaoZtjsN8Ey/aVD9evB/7Q/gHxNZxedqKaXd
-P/yylNe22V9Z6jp6XNncpcxOOJIzwa/B5J5E/wCWlel+HPi3408MalFJp+uT+VH/AMu0kv7uvrMJxXUemIgdUK5+0oAz1peK+EPAH7XEVxMbTxpZx2saDH2m36V9geHfGfh3xVo0N9pGpwTxyD7nmDf+VffYXM8FjP4czqpzVQ7CijtRXrmoUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFJn05pleA/E39oDwn4BgmtoJU1XWE/5dozXHXxFLDU+eoB7ZqWq6bo+mtd6neR2VsP+WksmBXx18UP2qrLTftWl+C4/tV/H/wAvMn+rr5C+IXxl8V+P9Ruvt+oSRWH/ACytoq8gkk31+Y5nxNUqfu8IcE656D4t+I3ijxjrH2zWNUkl/wCmccvlx1595knrSUV8JUqVav7yocwUUUVgZhRRRQAUUUUAFRvJGkPmSUPJGkPmSV9U/s//ALPl/wCOdctfFPim3ktPDcEvmRW8n/LzXtZbl1fH1+WOxpTp+0D9n79n688d67a+KfFFvJa+HIJfMitpf+WtfqBp2nWelaPbafYQJbWkEeyONBwBRp2nWmlaPb6fYQJbWkEeyONBwBWh254r9wweEoYKhyUT1oQUEQT28FzbPb3EayxOMOjdDX5x/tF/s6XGiXl3448D2xksHO++skr9JSMiq88MV1ZS286CWFxtdD0NXi8JSxlLkqFH4GRv5n/XX/lrUlfaX7Rf7Olxo95deOPA9n5ti/7y6sox/q6+KY5N9fiWbZTVy+r/ANOzx6lP2ZJRRRXz5mFFFFABRRRQAsckkf8Aq663w54x1zwzrFreaXqE9r5f/TX93XI0VVOq6X8MD71+G37WVwgisvG8f2k+b5f2mKvt3QfEuieJtHivdH1CO6hkjDny5M7K/C2vQvBXxK8UeB9YiuND1CS1i8397H/yzkr7rLuI8Rh/3df3ztp1z9sqUDIr
-5c+GH7SnhzxcY9M18po2q/cAlPElfT8ckc0AeNvMjYcYr9OweLw+Mp89FnbzInooor0igooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAaT7Vn32o2WnadJeX86WtsnWRzgCsbxV4r0fwh4XuNV1m6jt4Y4yQh6vX5h/GH48634+1e6srK4ksNBj/1Ucf8Ay0r53Ms1w+Xwd375lOoqZ7R8Z/2nBKLrw94KfEX+rlva+Fr7UbzUtSlvLy4kurqT/WySVQkk30lfjWOx+JzCpzzPMqVPaBRRRXlGYUUUUAFFFFABRRRQAVHI/lw0PJGkPmSV9W/s+/s+XnjnVbXxT4st5Lbw7BL5kNtJ/wAta9rLctqZhiOWOxpTp+0I/wBnv9nu88da7a+LfFFvJa+HLeXzLaKT/l5r9QLCws9L0iGw0+3S1tIRtijToBS2NhaabpEVhYQJbWkKbIo0HAFX+g9Qa/cMJhKGCoexonrQgqaH0UUV6JQUUUUwK1xDBdWskE8aywv8siP0PtX5xftF/s6SaPeXfjjwPbGSwc776yj/AOWdfpLVeeCK4tXhmjWWFx86PyCK4cRh6WMpezqAfgZHJv8A+mUv/POpK+1/2iv2dJdIvLvxx4ItjJYud99ZR18SRyeYP+msf+tr8RzbKauX1f8Ap2ePUp+zJKKKK+fMwooooAKKKKACiiigCaC7kgmikjk8qWOvr74NftLah4ZltdD8WSSX+jf8/Mv+sjr47or0cJjMTgqvPTNKdT2Z+7GgeItI8TaFFqGj3aXVs/Qit/PHPFfjZ8L/AIveI/h94jie0uHm08y/vbaWv1L+HfxJ0D4i+EItR0q4T7Tj97bE/vI6/YMqzmlmC5H8Z6cKiqHpNFFFfVmoUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFADSecVwnjvx7ofgHwhLqmsXCRj/AJZRk8yVY8beNNH8DeCbrWdYuEii
-jT93GermvyS+KHxN1j4jePLrULy4k+weZ/o1t/yzjr5TOM1p5fS9x++ZTqezL3xW+Lut/EjxRJPdTvDpUf8Ax62wrxuiivxXEYiriavtKh5m4UUUVgZhRRRQAUUUUAFFFFABUcj+XD5klEj+XDX1b+z5+z5d+NtXtfFniy3ktvDsEvmWsUn/AC1r2sty3EZhU5Y7GlOn7QX9nv8AZ7vPG+sWvizxZbyWvh2CXzIraT/l5r9PLCws9L0i3sLCBLa0gTZFEg4AosLKz03SIrDT4EtbWEbI40HArQHQ1+44TCU8Fh+SmetCCpod2ooor0ChO1Ju9KG64r5r+OXx50z4caDJp+mSpd6+/Hl5/wBXXNUq08PT55gfSueOeKWvkf4E/tF2fjmMaJ4kkjsNa/5Zf9NK+tKmhXp4mnz0wJKKKK7AK88EVxaSQzoJInGHQ96/Ob9ov9nSTR7u68ceB7PzbD/WX9lH/wAs/wDppX6QVXnhiurSSCeNZYXG2SN+hFcOIw9LGUvZ1APwMjk31JX2v+0V+zpLpd5d+OPA9sZLVzvvrJB/q6+JI5N//TKX/nnX4jm2U1cvq/8ATs8upT9mSUUUV8+c4UUUUAFFFFABRRRQAV3vgD4ha54B8Xxapo9w8X/PWL/npXBUVtTqVaVX2lM0P2Z+Ffxa0P4meFY7izlSPU0j/wBJtvSvXTjHFfh54K8ca54L8YWusaPcSRSxy/vY/wDnpX62fCr4n6N8SPAsV/ZzIl+gxdW46q9fseTZysfT9nU+NHfTqc56zRRRX2Z0hRRRQAUUUUAFFFFABRRRQAUUUUAFFFFADc84Arn/ABJ4i03wt4Su9Y1OYRWsCZJrZnnitbKSeeQRxoMsx7V+ZH7RvxjfxX4ul8NaNc+Xo1odkpj/AOWtfP5rmMMvw/OZVJqCPO/jL8W9U+IvjaXDyQ6NB+7trYV4XSvJvmpK/CsRiKuJq+0qHmBRRRWBmFFFFABRRRQAUUUUAFRv
-JHHD+8okk2Q+ZX1n+z5+z3d+NtWtfFvi23ktfDkEvmW1tJ/y8V7WW5biMfU5Y7GlOn7Qh/Z8/Z8vPG2sWvizxZbyW3h2CXzIbWT/AJa1+ntlY2mm6VDZWUCW9rCmyOOMcAUWFja6bpFtYWUCW1rDHsijQcAVodB65r9xwmEp4KnyQPWhBUxQBgUtFFeiUJ2pN3pQ3XFfMvx1+OunfDzw1Lpelzx3OvTpsHln/VVy1atPD0+eYC/HX47aX8PfDcmmaZOlzr88fAjOfLr8stY1nVPEfiW61TVLiS6upJf+WtGs6zqniPxJdaxqlxJdXU8vmVn1+L5znNXMKvs6f8M8upU9oTWN9eaVrEWoafcSWt1H/wAtI6/TD9n79oGz8XaNa+G/ElwltrMf7uKSQ/62vzJqaxvrzStYi1DT7iS1uoP3n7uscpzWrl9Wz/hhTqezP3uqSvj39n79oGz8W6Na+HPElx5WtR/u4pJP+WtfYIr9sw+Ip4mn7SmeoLRRRXYBWngiuLZ4Z41licfvEfoRX5z/ALRf7Okml3l3448D2xktXO++so6/SCq88MdxaSQTJ5kTja6HpiuLEYeljKXs6gH4GJJ5n/XWP/Wx1JX23+0V+zjJpl1deOfA9l5lr/rL+yj/AOWf/TSviCOTfX4hm2U1cvq/9Ozy6lP2ZJRRRXz5zhRRRQAUUUUAFFFFABXo/wAOfiFrHgD4g22sWFxIYvM/0qL/AJ6V5xRW9OpUpVfaUzTY/bb4e+PdH8f+BLbWNPkTzDHmWIH/AFdegA8V+QXwQ+K938OviNavK7zaLcfu7qL/AJ51+tGk6tYa34ctNU06dLm0nTfHIO9ft2T5lTx+HWvvnp05+0Rr0UUV9OahRRRQAUUUUAFFFFABRRRQAU3IzQfu/jXnPxO8bWfgP4Wahq1xJiYx7LZB3euarVhSp88wPnT9pf4z/wBhWD+C/D84GoTjF7J/zyFfnBPPJPN5klbPiPX7zxH4qutU
-1C4826nl/e1gV+D5njqmYYjn6Hj1KntAooorxDMKKKKACiiigAooooAKjkfy4aHkjjh/eV9Zfs+fs+XnjPVrXxZ4wt5Lbw7BJ5kNrJ/y1r2sty2pmFTkhsaU6ftBf2e/2fLzxvq9r4s8WW8lt4dgl8y1tZP+WtfpzZWNnp2mQ2VjAltawjZHHGOAKWysrXTtOhs7KBLa1hTZHGgwAKuZ4HFfuGEwlLBUuSierCCpjscUtFFekWJ2pN3pQ3XFfM3x1+O2n/Dzw3JpemTpc69PHx5Zz5dctWrTw9PnmAfHX47aX8PfDcmmaZOlzr88fAjOfLr8stZ1jUPEfiS61TWLiS6up5f+WtGs6zqHiPxJdapqlxJdXU8vmfvKz6/F85zmrmFX2dP+GeXUqe0CiiivlTnCiiigCaxvrzStYi1DT7iS1uo/9VJHX6X/ALP/AO0DZ+LtLtfDfiS4SLWo/wB3FI//AC1r8yqmsbu807WItQ0+4ktbqP8A5aR19LlOa1cvq2f8M6KdT2Z+91SV8efs/wD7QFn4r0e08N+JLlIdZjj2RSP/AMta+v6/a8PXp4mn7SmeoSUUUV2AV5reK4tXhnjEsT8Oj9CK/Ov9ov8AZ0k067uvHHgez/0X/WX1lH/yzr9G6glijmt3imRZImGHR+RXDiMPSxlL2dQD8C45N/8A0yl/551JX25+0X+zpJpc11448D2f+i/6y+so6+H0k8z/AK6x/wCtjr8RzbKauX1f+nZ5dSn7Mkooor585wooooAKKKKACiiigBUk2TV9v/syfGT+zNXi8F65cf6LOdljJIf9XXw/Vuxvrix1KK8t5PKljl8yKSvRwGLqYPE88DSnP2Z+9OQ49BUleBfAP4k23jz4PWscjn+1bGPy7qN698HpX7/h69PE0lUgewLRRRXYAUUUUAFFFFABRRR2oAgkkRIHdziNOtflp+0l8UH8YfEyXStOuP8AiV2H7vyv+eklfaH7Q3joeDfgXfx2
-1x5OqXcfl21fkpdzyT6lLJJJ5vmS+ZX5nxNj9PqsDgr1PsFSiiivy84gooooAKKKKACiiigAqOSTZD5lEj+XDX1n+z3+z3d+M9YtfGHi23ktdBgl8y1tpP8AlpXtZbltTMKnJDY0p0/aC/s9fs9XnjTWLXxh4wt5LXQYJfMtbaT/AJeK/TixsrbTtKt7KzhW3tYUCRxoOAKWys7TTtNis7OBLW2jG2ONBgAVd6D1r9wweEw+Cp8lFHqwgoDh0ooor0ixO1Ju9KG64r5h+O3x10/wD4buNI0idLrX5ouPL/5ZVy1atPD0+eYEnx1+OunfD/w5LpOlTpc6/L8mEP8Aqq/LPWNZ1DxH4kutY1S4kurqeXzP3lGs6xqHiPxJdaprFxJdXU8v/LWs+vxbOc5q4+r7On/DPLqVPaBRRRXyxzhRRXo/wr+GWufFT4hRaXp9vJFpcf8Ax/XP/LPy67MJhMTjanJQNKdP2h5xRXsnxl+Det/CnxecI934cn/49rkV45/rDWmLwGJwVTkrhUp+zEooorzzMmtLq807WItQ0+4e1uo/3lfpX+z/APtCWfivS7bw34nuPJ1pP3cUsn/LSvzOqa1urzTdYi1DT7iS1uo/9VJHX0mU5rVy+rZ/wzop1PZn745pa+Of2fv2gbPxVptr4X8SXHlazH+7ikk/5aV9hV+2YevTxNP2lM9QkooorsArzwxT20kUqCSNxh0PcV+df7Rf7OMmnT3XjjwPZ+ba/wCsvrKP/ln/ANNK/RuoJoIri0khnjEsLjDo/IIrhxGHpYyl7OoB+Bccm+pK+4P2iv2dZNPu7rxx4HtsWv8ArL6yj/g96+G45N//AEyl/wCedfiOa5TVy+rp/DPLqU/ZklFFFfPnOFFFFABRRRQAUUUUAe1fBP4jXHgT4tWF5JJ/oEkvl3Mdfr7pt/b6noVrfW7eZDPGHU1+DySbJq/TD9lXx/8A258PJfDF5cGW/s/9V5n/ADzr9G4Zx/s5
-/VJnbQqfYPsKijtRX6sd4UUUUAFFFFACDHaopJEhgeSRxHGg5JqTIBwK8X+OfjGLwn8C9Ul8zy7q6j8qKuKvXWHpOcwPgf8AaP8AiC/i/wCL91ZRP5mn6bL9nixXzTVu6nkuryW4kk82WT95LVSv58xdepicVOvM8h7hRRRXGZBRRRQAUUUUAFRvJHHD+8okfy4a+uP2fP2eLvxhq9r4x8YW0lroMf7y2tpP+Xmvay3LamYVOSBpTp+0E/Z8/Z4vPGerWvi3xhbSW2hQS+Za2sn/AC1r9N7W0t7HT4rO0hS3tY02xxp0ApLGyt9O023s7OFLe1hj2RxoOAKu9B65r9xwmEp4KnyQPVhBQHDoKKKK9EsTtSbvShuuK+Yfjt8dtO8AeGpdI0edLnXpPkxGf9VXLVq08PT55gJ8dvjxp3gDw5JpOkTpda/PF/yzOfKr8uNZ1jUPEHiS61TVLiS6up5f+WlGsazqGv8AiS61TVLiS6up5fM/eVn1+LZznNXH1fZ0/wCGeXUqe0Ciiivlkc4UUV6P8L/hf4g+K/juLS9MjeLSo5f9Ovf+edejg8JiMbiPYQ2NKdP2hF8L/hf4g+KnjuLS9Ljki0uOT/Sr3/lnX68eAvAPh/4d+BbXQ9DtEiEcf7yTH7ySjwF4C0T4eeArXRNDtkiEafvZP+ej+td4Bjk1+4ZbltDLqHJA9OnT9mct4q8J6J4z8F3Wia5aJc2k8eOR9z6V+SXxl+DWt/CjxrKRHJd+G7iT/Rbn/nnX7LdRXL+KvC2j+MPB11omt2aXVpPHjDj7laY7A0MwoezqBUp+0Pwy/wBYaSvZPjJ8G9b+E3jSUiOS78LXEv8Ao1z6V43X4Vj8BiMvxHJPY8ypT9mFFFFeeZk1rdXmnaxFqGn3D2t1H/y0ir9Kv2fP2g7fxXplt4Y8UXKQ61H+7ikc/wCtr8z6mtbq807WItQ0+4kiuo/3kVfSZTmtXL6tn/DOinU9mfvdUlfHH7P3
-7Qdt4n0218MeKLjytaj/AHccsn/LWvsYV+2YfEU8TT9pTPUFooorsAryxxzQvHKiyRsOUcda/PD9ov8AZ0fT5brxx4Hs/wB1/rL6yjr9F6gkijmt3ikQSRuMOhrjxGHp4mn7OoB+BUcm8f8APKWP/Wx1JX3D+0X+zg9lLdeOPAdn+6/1l/ZR/wDoyvhpJPMP/PKWvw/Ncpq5fVv/AMuzy6lP2ZJRRRXz5zhRRRQAUUUUAFet/B7xvP4I+L2mamj+XDJJHbXWa8kqaCTZeRSVvSqVcPV9pTNFufu/pt/Bqeh2t9av5kE0YdT61odzXyv+yz43HiP4MjRbiTzNQ03iU19UnG01/QeDrrF4aFQ9OGw6iiivSNQoPSiigBgxgk1+df7XHjcXvi+x8JxDEVj+9lr9ANZvY9N8L39+/SC3eT8hX4t/EbxNceKviprOsXH/AC3lr4PifF+ywfsP5zkrzsjgqKKK/HzzgooooAKKKKACo5H8uGh5I44f3lfXn7Pn7PN34v1a28Y+MLaS20KOTzLW2k/5a17WW5bUzCpyQNKdP2hH+zx+zxeeMNXtfGHjC2kttCT95a20n/LWv02tbS3sbCK0tIEtraMbY406Ci0tLex06KztIUt7WNNkcacACrZPNfuODwdPBU/Z0z10lBDscUtFFeiMTtSbvShuuK+XPj18edP8AeGpdH0e4S61+eL/AJZn/V1y1atPD0+eYD/jx8eNO8AeGrnSNInS61+eMoPLOfKr8udV1XUNf8SXWqapcSXV1JL/AMtKNV1XUPEHiO61TVLiS6up5fM/eVn1+L5znNXMKvs6f8M8upU9oFFFFfKnOFFFejfC/wCF/iD4r+O47DS45ItKjk/0q9/5Z16GEwmIxuI5KGxpTp+0D4YfDDX/AIreO4tM0yB4dKjl/wBOuT/zzr9dPAXgDQPh74FtND0O3WMRx4knx+8k96PAXgHQPh54EtdD0K0SKKOPEkmPnkrvAMcmv3HL
-cuoZfQ5IHp06fsx1FFFe2ahRRRQByvirwto/jDwfd6Jrdml1aTx4xIPuV+S3xl+DWufCjxtKY45LrwvcS/6Lc/8APOv2R6iua8U+FtH8X+D7rQ9bs0ubSdMHI5X3ryMfgaGYUPZ1EZVKftD8L/8AWGkr2X4zfBrXPhR42lkjjkuvC9xL/o1z/wA868b/ANYa/CsfgMRl+I5J7HmVKfsxKKKK88zJrW7vNN1iLUNPkktbqP8A1UkdfpL+z5+0Hb+KNMtvDHie48nVo/3cUsn/AC0r81Kmtbq807WItQ0+4e1uo/8AlpFX0mU5rVy+rZ/wzop1PZn73VJXxl+z3+0Jb+J9NtvDHie48nVY/wB3FLJ/y1r7Jr9sw9eniaftKZ6hJRRRXYBBPFFPaPDMgkjcYdD3Ffnf+0d+zpJZXV1458D2f7r/AFl9ZR1+i9QPEk1u6SJ5kb9Y3HFcdfD08TT9nUA/ApJP+ekflSx/62OpK+5v2i/2dXs5rrxx4Hs/3X+svrKOvhWOT/lnJ+6lj/1kdfh+a5TVy+rf/l2eXUp+zJKKKK+fOcKKKKACiiigD6c/Zl8a/wDCOfGu10+T91a6lJHb1+rHU59a/CXQNVuNH8VWGoW/+ttJfMr9pfh9rieIvhBoeqCQSSy2sZkPvX6rwri1UpzovoelQndHc0UUV+jnUFFFFAHhn7QHiQ+Hf2edRnSTypJ/3Yr8gJ5PMm8yv0D/AGwPFXkWWl+F/M/1n+kV+fEn+tFfivEmI9rmHJ/IeXX/AIg2iiivjTnCiiigAqOR/Lhokk2V9efs8fs8XfizUbTxj4xt5LbQk/eWttJ/y1r2sty2pmFTkgaU6ftBf2eP2eLvxZq9r4w8Y2/l6DHL5ltbSf8ALxX6X21nb2Wnw2dpEtvawpsijTooqSztLaxsI7WzgS2toxiOOPgCrnc1+44PCU8FS5KZ60FyIQdBS0UV6JQnak3elDdcV8ufHj48ad4C8P3Oj6POl1r0
-8ez5DzFXLVq08PT55gHx5+PWn/D/AECXSNHnS51+X5MRn/VV+Xmq6rqHiDxHdapqlxJdXU8vmfvKNV1XUNf1661TVLiS6up5f+WlZ9fi2c5zVx9X2dP+GeXUqe0CiiivljnCiivR/hZ8LNf+K/juKwsIHh0WP/j+uf8ApnXoYPB4jG4j2cDSnT9oHwr+FfiD4r+PItP0+OSLRo5f9Ovf+edfrn4C8BaJ8PPAVroeiWyRCOP97IP+Wj+tP8C+AtA+H3ga20LQrZYoo48SSY+eSu5Axya/ccty6hl1Dkpnp04ezHUUUV7ZqFFFeSfFT4teHfhf4Lk1DVLlJL1/+Pa29aTaSuwPWVpSM14Z8IPjh4c+Kmiyx206W2sQf662c817lnnpWcJxqLmiA6iiitQOZ8VeFtH8X+D7rRNbtEu7OYYKuOlfkj8afgvrfwo8XyyxRyXXhe4l/wBGuf8AnnX7JdRXNeKfCuj+L/B13outWSXVpPGUIcZ215GOwFDMKHs6hjOmpn4XUV7T8aPgvq/wp8aSSxRyXXhe4k/0W5/5514v/rDX4Vj8BiMvxHJPY82pT9mJRRRXnmZNaXd5p2sRahp9xJFdR/vIpK/SX9nz9oS38T6Xa+GPE8/larH8kVxIf9bX5qVNa3d5p2pRahp8klrdR/6qSOvpMpzWrl9Wz/hnRTqezP3uqSvjL9nv9oS38T6bbeGPE9x5Oqx/u4pZP+WtfZP3h6Cv2zD4iniaftKZ6hJRRRXYBBLHHNC8boHjfhxX56ftF/s4yWst1448B2f7v/WX9lF/6Mr9Eqgkijmt3ikQSRuMOhrjxGHp4mn7OoB+BUcm/wD6ZSx/8s6kr7l/aO/Zye2luvHHgez/AHQ/eX1lH3r4Wjfjy5I/Klj/ANbHX4fmuU1cvq3/AOXZ5dSn7Mkooor585wooooAVOlfqH+yf4gl1X4O32nzvmWwm8uvy7r7D/ZK8VSWHxZm8PvJ+6vhX1GQV1QzCC7m
-9D+IfpqOlFFFfuh6oVHUlQzHbZyn0Sk9gPyk/ad1j+1f2hLr955v2e18uvmivR/ixqUmpfHLXrjzP3X2mSOvOK/nXH1PaY6pUPGqBRRRXnEBUbyRxw/vKJH8uGvsH9nn9nm78V6ha+MfGVvJFosZ8y2t5P8Al4r2sty2pmFTkjsaU6ftCP8AZ4/Z3vPFmo2vjDxnbSW2gp+8tbKT/lpX6Y21lb2OnRWlpClvaxptjjToBRaWsFjp0VpZxLFawx7I407Crbda/ccJg6WDpezonrq0B/aiiivRGJwBSZPYUHkivlv48fHnT/AegS6Joc6XOvy/IRGf9VXLXr08NT56mwB8ePjzp/gPw/Lo+iXCXWvzx/8ALM/6uvy91XVdQ1zXrrVNUuJLq6nk/wCWlGq6rqGua/dapqlxJdXU8vmVn1+LZznFTH1LU/4Z5dSp7QKKKK+W3OcKKK9M+Ffwr1/4r+PItP0+OSHRo5f9Ovf+edejg8JiMbiPYQ2NKdP2hF8LPhX4g+K/juKwsI5ItFjk/wBJvf8AlnX67+BPAmgfD7wJa6HodokMMceJJAOZDR4E8C6J8PvAdroWhWyRRRp+8k7yP613AGOTX7hluW0MuockD06dP2Y6iiivbNQo7UV5B8Wvi1ofwr8By6heSJLqckf+g2ef9bSbSV2A34tfFrw/8LPAc2oahOkmpvH/AKLZZ/eS1+SPjTxr4g+IXjy68QeILiSWWSX91H/yyjjo8aeNNc+IXjy68QeILiSXzJf9Fi/551y1fkGd528U/YUPgOCpUNXw54g1jwd4wtfEHh+4ktb+CX/ln/y0r9Y/gl8bdH+KfgyON5FtfEUMf+k2zn73uK/IetXw/wCINY8JeMLXxB4fvJLW/gl/5Z/8tK58izx4R+wr/AZU6nsz94QetKRmvAvgh8btH+Kng+KN5EtvEUEf+lW2a98zz0r9ip1I1YqcNj1B1FFFbAcz4n8L6P4v8IXeh65aJd2E6YIN
-fkt8aPgvq/wp8aSyxRyXXhe4l/0a5/551+xvUVznibw1pHi3wfdaJrdml3YTx4IevIx2AoZhQ9nUMqlP2h+Fv+sNJXtPxo+C+t/CjxfLcRJJd+F55f8ARrn/AJ514tX4Vj8BiMvxHJPY8ypT9mFFFFeeZk1rdXGnalFeWcklrdR/8tI6/SD9nv8AaEt/EmmWvhfxRceTqsf7uKWT/lpX5s1Na3VxY6lFeWckkV1H/qpK+kynNauX1bP+GdFOp7M/e6pK+Lv2e/2hbfxHplr4X8UXHlapH+7iuJP+WtfZtftmHxFPE0/aUz1CSiiiuwCCSOOa3KSoHjfqjivz0/aL/Zxe2muvG/gez/df6y+so+9folUMkSSRPG6b426j1rjxGHp4mn7OoB+BKSf62OT91LH/AK2OpK+6/wBov9nF4Zbrxx4DtOc77+yj/wDRlfCCScfvI/Klj/5ZyV+H5rlNXL6t/wDl2eXUp+zJKKKK+fOcK9b+DWqyaN8eNBvI5PK/e15JW14fu5LTxhYXEf8AywuY66MNU9nWpzNUfunZyiewgn/vxg1brA8NzJdeAdIuE6SWcePyrfr+jqWtNM9cb3Fc54qvv7O+H+rXn/PO1f8AlXR9lrzv4qTmD4Ga7JH/AM8a58RPkozYH44+J5/tXjbVLj/npcyVzdaGpSeZrF1J/wBNZKz6/nOp/FPDCo5JNlEkmyvsL9nf9ne48U6ja+MPGlvJFo0f7y2spP8AlpXs5bltXMKvJD+GaU6ftA/Z4/Z4u/FmpWnjTxhbyW2jIfMsbaT/AJaV+llrZ21jYx2lnAltbRjEccfQUWlrBZadFZ2kaw2sabI406AVcPHAr9zwmDpYOn7OmetpAd2oooruKE4ApMk9BQeoFfLHx6+PWn+BNAl0TRLhLrXp4v8Almf9XXLXxFPDU+eowG/Hn48ad4D8P3Oh6JOl1r88ez92c+VX5e6rquoa5r11qmqXEl1dTy/8tKNV1XUNc166
-1TVLiS6up5f+WlVK/Fc4zipjqll/DPLqVPaBRRRXy5zhRRXpnws+Fmv/ABW8dR2FhHJFoscn+lXv/LOvRwmDxGNxHJQ2NKdP2gnws+Fmv/Fbx3Fp9hA8Oix/8f1yf+edfrn4F8C6B8PvA1roWhWyxRRx4kkx88lHgTwJoHw+8CW2h6FaJDDHHiSQD/WV3AGOTX7hluXUMvockD06dPkHUUUV7ZqFHaivIPi18WvD3ws8CS32oSpNqckf+i2Wf3ktJtJXYDPiz8W9A+FvgKbUNRnR9TdP9Fts/eevyS8a+NPEHxC8eXXiDxBcSSyvJ+6tv+WcdReNfGviD4hePLrxB4guJJZZP9VH/wAso465uvyDPM8eKfsKHwHBUqBRRRXwZxBRRRQBq6B4g1jwl4wtfEHh+4ktb+CXzP3f/LSv1h+CHxv0f4p+Do453S18RwR/6VbV+RNaugeINY8I+MLXxB4fvJLW/gl/7+V9pk2efU37Cv8AAdFOp7M/eEHrSkZr59+CHxv0f4qeEI4JJFtvEcEf+k20n8fvX0Du55r9ip1I1YqcNj1B1FFFbAcz4n8MaP4r8H3ei61ZpdWc8ZQhxnbX5L/Gj4Lax8KPF8slvHJdeF7iX/Rrn/nnX7GdRXOeJvDOkeLfCN1omt2aXdhOmCDXkY7AUMwoezqIyqU/aH4W/f8A9XSV7V8afgtrHwo8Xy3FvHJdeF55f9Guf+edeLf6w1+H4/AYjL8RyT2PMqU/ZiUUUV5RmTWl1cWOpRahZySWt1H/AKqSOv0g/Z7/AGhLbxJplt4X8UXHk6on7u2lk/5a1+bNTWt1cWOpRXlnJJa3Uf8Ay1jr6TKc1q4CrZ/wzop1PZn73feHoKkr4t/Z8/aEt/EemW3hfxPceVqsf7uO4k719nfeHoK/bMPiKWJp+0pnqElFFFdgEEkcc0EkciCSN+HQ1+fH7R37OUkM13478D2+CD5l9ZR96/Q6oHjjlh2SIHR+qOK46+Hp
-4mn7OoB+BUcnPlyR+VLH/rY5Kkr7r/aL/ZxeGW78ceB7cj/lpfWUf/LSvhBJP9bHJ+6lj/1sdfh+a5TVy+rf/l2eXUp+zJKt2j7LzzKqUqdK8BPU5z9ofg5qg1b4DaNP/ci2V6pjIHOK+fv2bp5J/wBmvT5JOu8/0r6ABwK/ofAy9tgoS8j2KfwIU521w/xD8PX/AIo+E2qaLpkkMV7cRYie4J8uu6pDjvXbUpqpT5GaH5jzfsa/FCSfzP7d8Mj/ALfbj/5HqP8A4Yy+Kf8A0HvDP/gbcf8AyNX6d/8AAqP+BV8r/q5l19jm9hT7HwB8Mv2PNU0f4gR6z8Q9S0rVbW3fMVnp0skol/66GSOOvvS1tLex06K0s41itYY9kcadhVvBzyaCQOK+iwuEpYOlyUUdI6iiiu8AooooA4Txvb+NL3wPc2ngxtNtdRkjx5+o3UkXl/TZHJXwPq37Ifxf1vxBdanqnibwzdXU8vmZ+23H/wAj1+mQOaafXtXk43L8Nj48lYynBT3PzE/4Yy+Kf/Qe8M/+Btx/8jUv/DGXxT/6D3hn/wADbj/5Gr9O/wDgVH/Aq8P/AFcy3sZ+wpdj8xP+GMvin/0HvDP/AIG3H/yNSf8ADGXxT/6D3hn/AMDbj/5Gr9PP+BUd/vUf6uZb2D2FPsfmLZfsXfEKbW7c6v4h0CPTBJm4Wyup3lb6ZtxX6BeBvAmieAPAlroWh2aQxIn7yQdZH9a7joadXu4HA4bL6fJQRpCChsHaiiivVNQoPQ0UUAY2rNqaaBcnSEtpdS2fuhduVjz74r4B8bfsx/G7x58QbrX/ABB4l8L3MjPm2jF/d4iH/gPX6K9fbFJmuDFYWnjKfJMmUVM/MT/hjL4p/wDQe8M/+Btx/wDI1H/DGXxT/wCg94Z/8Dbj/wCRq/Tzn1/Wk59f1r5v/VnLexh7CkfmL/wxl8U/+g94Z/8AA24/+RqP+GMvin/0HvDP/gbcf/I1fp3/AMCo/wCB
-U/8AVzLewewpdj8xP+GMvin/ANB7wz/4G3H/AMjUf8MZfFP/AKD3hn/wNuP/AJGr9O/+BUf8Co/1cy3sHsKXY/MT/hjL4p/9B7wz/wCBtx/8jUn/AAxl8U/+g94Z/wDA24/+Rq/Tz/gVHf71H+rmW9g9hT7H5reHv2UPjX4W8a2mu+HvFPhiwvoHyT9vu/n+v+j1+gvhweI18J20fieOyGsRx4lewmeSOQ/8DjSukHXgU6vo8LhaeDp8lM0hBQ2Ciiiu81CiiigDmvE3hnR/Fvg+70TW7RLuwnjwQ9fn14i/Yv8AGa+LbuXwtruiPozy+ZFDqNxcRSx/98RyCv0q7UzBrzcXgcPj6fJXRlOCnufmJ/wxl8U/+g94Z/8AA24/+RqX/hjL4p/9B7wz/wCBtx/8jV+nf/AqP+BV8/8A6uZb2M/YUux+Yn/DGXxT/wCg94Z/8Dbj/wCRqT/hjL4p/wDQe8M/+Btx/wDI1fp5/wACo7/eo/1cy3sHsKfY/Me0/Y6+LVlqUd5Z+IvDMV1H/q5Pttxx/wCS9fdfw30vx/ongWLTfHFzpV9dwR4jn065klz9d8cdemj2p1ezgsuw2AX7g1hBQ2CiiivZNAooooAhkjSSJ0kXfG3UetfD3xe/ZMn8VeND4g8AXmnaPdz/APHzbahNJHEf+/cclfc9Jj04rjr4eliafs6gH5g/8MZfFPP/ACHPC3/gZcf/ACPS/wDDGPxP/wCg74Z/8Dbj/wCR6/Tzn1/Wjn1/WvmP9Wcu7HP7CkeN/BfwJrvw8+DcPh/XLi1ub+J8+ZZzPLGfpvjjP6V7F3p2D3NLgV9VQoU8PTUIbHQLRRRXSAUUUUAFFFcx4n17R/Cfw917xVrl2bDRNG02e/1K5Eby+XbxR+ZJIUTLvhEPTJ470AfPPx9/az+GP7O/ivw5ovjCz1nV9Z1i2lulttBht55bOKORIxLcRyXEbokhMnlnBD/Z5v8Anma8M/4effAP/oT/AB9/
-4LNP/wDk2vx6+OHxe1/45/tGa98R/Edt/Zc135cdlpUV7JcR6XaR/wCrt4/M/wC/kn+r8ySSSTy4/MrySSTZD5lAH9Zfgjxbp/jz4LeEfG+lxT2+k+I9FtNWsY7qMJIkVzEksYkC9Hw4yB3rtaw9K03T9E8PWWj6NYQaVpFjAlvZWVpAkVvbxoNiRxxoMIgxwOwGK8N/aG/aF8H/ALO/wSm8S+JXOqa5emSLw34ct5xHdarP3AP/ACzij3x+ZLj92CMb5JIo5AD6Or8+PFf/AAUY+C3g34peKvBus+EfHMmreH9Wu9MvmtdNs2ieW2keOUxk3gJTMZ5wPpXxbf8A/BTz45S61fy6b4M8C2FjJdyGytriyvbiS3j8z93FJJ9pj8x/L/5aeXHn/nnHX59eE/DWoeMPil4Y8GaRJa2up65q9no9lJeSSJbx3FzJHHH5nlf8s/MkoA/qP+F3xCsPil8DvDvxA0rRda8O6XrEUk1naeILL7Ne+UJHjjm8sO/7uUR+bGejxyRuOten18t/Hnxhd/s1f8E3dW1/4ZaRpx/4RGz0vTdE07VTPc20dsb23shHJiTzZBHHIf8AlpnjrX5ueHP+CmXxnvfHujxa/wCEPBP/AAj0dzHcav8AYoJLa4azj/eXAgkudRjjNx5ccvlxHPmSeXH/AMtKAP3Hor8OLD/gpF+0B4o+KVl4f8H/AA78Ffada1mOx0LTbiO5klEtxL5dvbSXH2mOPzMyRp5v7uMn/nnX7Ofaj4f+Hv8AafjLW9Ot10/Tzca1qxT7DZReXFuuLjEkj+REMSPiSWTYOsh60AdXRX4xfFj/AIKaa9F8U57L4NeDtIuvCdncSxprHiZLh31dD5XlzR28UkRt4x+9/wBZ5kkkZjOIz5kY+lf2Nf2vda/aG8T+MfCPjrS9H0XxlplrHqem/wBiW9zHHeWRIjl8yOUyeVJFI8X/AC0/eC44jHlyUAfoRRXjPxw+JMfwi/ZL+IHxEmkt
-7e50nSJX00XtvLPBJeyfu7OKRIv3hSS4eKPjH3+qV+Qj/wDBT/8AaA8mTZ4Q+HxkHY6ZqH/yZQB+8NFfhFf/APBT745S6zqEum+C/AtjYSXUhsba5s724kto/wDlnFJJ9pj8yT/pp5cf/XOOv2b+HPi1/H37PXgXx2bEaPL4k8P2erix+0+f9mFzbpL5Zkwm/Z5mCcc4+lAHoVeLeNPjV4D8EfGPwh8O9VvbzUPiD4mu44tG8PaPZSXl7JbyXCRSXcgTi3t48ySvJKUHl29x5e8xEV8g/tXfty+Hvhr4c1/wB8KNYh1v4sR3cmn3t3FbiWy8POP9ZJmQeXcXGZNgjHmRxyRyebzGYpPy6+D/AMXviU3/AAUU8PfES3fRvGPxd8S62mn2Wo+LpLn7Pb3l7/oUcsn2aSP935cnl+V+8jjj/wBXH+7j8sA/psorxn44fEmP4Rfsl/ED4iTSW9vc6TpEr6aL23lngkvZP3dnFIkX7wpJcPFHxj7/AFSvyf8ACn/BRf8AaK8afFHwv4M0bwz8OLTWdf1a30uwlvNM1BbeK4uJI4ozJ5d4SU8ySgD9xqK/Hj47/wDBQ74jeA/2u/Hvgv4faT4R13wloeoiwtr3VNLvPtBuI440uY5MXMf+ruftEfEf/LP0/eV9zfso/FHx98af2RLH4jeP7TQbC61bUbsaTB4diuI4ktLeQ2x8wSSSfvftEVyfkfHl+V3zQB9Q0V+PHx3/AOCh3xG8B/td+PfBfw+0nwjrvhLQ9RFhbXuqaXefaDcRxxpcxyYuY/8AV3P2iPiP/ln6fvK8mb/gp/8AHSaxjRPA3gaG9S4cSXD2V68dxHsjKeXH9p/d+XIJx5nmSeZ5kf7uPZ+8AP3gorgPhn4vPxA/Z08B+Omsf7NHiPw9Z6uLP7R54txc26SiPePv48zr3r4N/ac/b70z4R/EC9+Hfwp0fTvGvjHT8pq2qajdySadpNxHLH5lsY4v3lxII/MEmJI/LkMY
-/eyebHGAfpjRX5Afs/f8FDPHfj/9rTwl4H+Jmg+GdJ8PeILn+y4b3Q7K8iube8kx9n48y4EkcsgEX/LMfvPM8zEZB/X+gArivHHizTvAfwS8XeNtTgubnS/Dmi3erXkdpH5k7xW8TyyCMN1fCHANdrXz1+1T4h0bwz/wTj+NN/4gvRY2N14TvNMhdoncNcXsf2O2iwnOXnnjTj+/QB8yf8PPvgH/ANCf4+/8Fmn/APybXrXxn/bK+GnwG8UeGND8c+HfFY8UazosWrSaLp9lbzS6VFI3lIlxJ5/2cyGRJo8W8sozE/rGZP5xZ/M+yS+X/rfKruviP8QfE/xV+N/iP4heM5LWXxPrtzHcX32O3MFvH5cccccccZ/5Zxxxxx/89P3f7ySSgD+gvwx+1/8ACzxZ+xV43+O8dn4h0jwZ4W1Iafe299Yxm9ubjZb+XHHHFLIMyPdxRjzXjweZNkf7yvKtC/4KOfBjxP4+0TwzoPgnx9e+INYvrfT9NtzYadGLi4lkEUcfmPehM739a/ET/hYPi1/2ej8KpJrWLwOnimTxH5Mdt/pD3kllHbebJJ/zzjjjk8uOP+/J5nmfu/L/AEd/4Ju/AjVNT+KWo/HTxJpt7Z6DplrJY+EZp4zFHf3kvmRXNzGRJmSOOMyR/vI3jkkuCciS2oA/a6ivhT9qL9tLwZ8A31TwToEJ8W/Fv+zvMtbFQJbHSpJDH5Z1BxIJOY384W8f72SNP+WYkjkr4OsP+Cn3xyi1jT5dS8D+Bb6wjuY5L62trK9t5LmP/lpFHJ9pk8uT/pp5cmP+eclAH7uUVzHhjXtI8W/D3QfFuh3n2/RNZ02C/wBNuTE8Xn28sfmRyBHG9Mo4PODz+Ffmt+1f+3J44+Cv7XN38Pfh7p/hfXbPTtIt5NWGs6ZevcW95IHl8vfHcRxun2d7eTH/AE0/IA/VCivwiH/BUH45NaXNufAngYX/AJsckd4Le98ox/vfMiMX2n/Wc2/7zzP3
-flyfu5PMHlfq3+zh8VdW+Nv7Fvgr4k6tplro+patDPHdQWc5lt/MtrqW2eRM9Ek8jzPLydm/Z5kmPMIBkftAftReAf2cL3wnF440bX9UbxELs2H9g21vJs+z+R5nmebPHj/j4j55rD+A37W/gL9oTx/q2geCPCnjDTzpVgby/wBQ1fS7eOxjzIkccfmRXEmJJCZPLTv5Uv8Acr8eP27PiLD8Rf8AgpF4tNjNa3el+GI4/DlrPb20kcjfZhJJciTzBnzI72S5j81P3flpH/10kg+Cv7SWr/s1fBtP+FdaV4Z8R+K/F1095r9xqUtxeCys7aT7NZWckcVzGbe4jkTUbiXMf+qvLOTzMHy4wD+kOivz1/Y1/aQ+Nv7RHi3xhqnjPwx4Y0jwFo9qkEV9pem3tvcXWoSSApFHJJJJE8ccYk8wDEieZbnH7w16n+0x+1P4M/Zu8O6dFd2i+LfHWouk2neGLe9+zSfZ9+JLmeQRyeWn+sEZMZ8yQEAAJJJEAfW9FfhB/wAPPv2gPK/5FT4e+Z6f2PqH/wAm1+tP7PfxF8RfFf8AY38AfELxP4b/AOEW1zWrIvcWaLLHHL5cskYuYhLmTyrhIxcRAl/3cifvJP8AWEA92ooooAKKKKACiiigAooooAK/GP8A4KQfHqK/1Kw/Z88NXl3EdOuY9R8Z/JLHHJIYo5bO28wyDzI/Lk+0SfupIvM+z/vBJHIB+jv7RXxhtfgZ+yb4t8fSG2k1e2tvI8P2l0wIvdRl/d28fl+ZGZEB/eSBJBJ5UchHSv5wtA0fxn8bf2nrDR7ZzrXjfxl4gkkubj7P+7luLmTzLi5kjt4/3ccfmSSSeXH+7jjkoA6T4PQ/DCP/AIWVrHxL1uCxltPBGqW/hbSZLKS4/tDWLm2kit/+XaSOOOPzPM8ySSPy5fs0n/PSvOPC/hfU/HPxK8PeCtInhttY1/UrfTLKS7cpbx3FxJ5cfmAcmPzJK+tfiz+wv8Wvg58Adf8A
-iT4n8R+EL7QdFFv9pg0q/u5LmQy3EdvGIxJbxoD5kueZK8C+Ar7P27/gZ/2UbQ//AE5W9AH9U9fzIftTfHbUPj1+1RrviCDVJrvwFp1y9n4PtHeQRpaf8/Mcflx+XJceX9ok82My/vI4v+Wcdf031/IdfadqGlazdaXqmnz6XqlpLJb3Nle23l3NtJH+6kjkjk/1clAHoHjv4Z6j8Pfh98OtQ8QanBFrvi/SP+EgtdFjjkkks9Lk/wCPK5kuP9X5lz5dz+7j/wBXHHH5n+s8uP67/wCCcHw8uPE/7cN149kS8/szwPpL3Pn2k8SIby9R7aOKSM/vJI5IDeSZj4ElvHyPuSfAk99eXVnYWdxeT3VrYR/Z7GOSXzI7aPzJJPLj/wCecfmSSSf9dJJK/e3/AIJ3/DP/AIQn9guHxNqFqINc8a6i+qSmfSTbXMdrF/o9vEZfv3EeEkuY5P8AV4vP3eQfMkAPQf2+U3/8En/ioPfS/wD07WdfzjV+7P8AwU51PVLH9gXwtbadqV1YWl948tLfU4re5eOK8t/sV5L5UuP9YnmRxyY/56Rx1+P3wT+EHiP45/tFaH8OvDtyNKkvhJJfatLZSXEWlW8X+suZI4/+/cf+r8ySSOPzI/MoA/SD/gmz8B7i1jv/ANoHxPZwPbXdrJYeDGMkcjj97JFeXJjEeY3/AHf2aM+Zvx9pygjkjrr/APgpj8WJdF+CHhX4O6bd2rzeKbn+0dfiE8bzw2VtKkltFJB5ZkRJLgeYkuU/48pE+cFxX6V+GNB0fwn8PNA8JaHaGw0TRtNg0/TbYyvL5dvFH5cce9yXfCJ354r8Rv8Agp95f/DwLwlH/wAtf+FfWf8A6W6hQB8OfD/xF4c8J/EeHxH4j8GweOxYW0kmnaTqN95enG7/AOXaS8j8v/SLeOT95JbeZH5n/PTy/Mjk+9f+CYGi6tc/tmeOvE0Fr5mhad4MksL68EseY57i9t5LdPL/ANZ88dncHP8A
-0zr5B+DH7RXxH/Z9tvG7+AdQsLAeJdN+x30mo2Mdx9mki8z7Ncx/9NIvMk/1nmR/vP3kclfvR+yrp3xkP7K48TfHTXtS1H4h+J9RfVJLTVbGO0l0mDy47e3tvKj/AHceY4BcGMRxlJLiTzIxJ5hoA+O/+CnHxbhsPA3g34I6bdXaanqMqeINc8i4kjT7HGZIraOSPy/LuI5J/Mkx5mY5LOLKHzI6/OX4PfD3w54m+GXxx8d+N4riPwv4M8EXEljc20v7oa5e/wCjaVHLHH+8kjkkkkk/55/6PH5knl/6y7+1P8TP+Fs/t6/EXxZb34vtBTUzpmiSRat/aFt9ksz9njktpOI/LufLlufLj/d/6RJ/rP8AW10/it/+Fc/8EsPh74Oi/wBF8T/E7xDceKtcj5sr2PSLL/QtOtriP/WXNlcSfaL22lk8uL93+7jk/wBZQB806HoeseJ/G2jeG/D9n/amvatfR6fpll5scf2m4kk8qOPzJP3cf7ySv6svA/hSx8EfBbwn4H06a6udN8O6LaaXaTXjpJPLHbxJFG8hUcviMcgYzX4Nf8E+/hm3j7/goFpfiC+tPtOh+DLF9Yujc6P9ptpLvPl2cfmf6u3k3yfaYv8Arz/dg/6yP9wPjbr+r+Ev2Nvi14p0C/8A7N8QaN4M1PUNNvQqP9nnis5JY5CknyH50HB4P4mgD+bX44eKPBHjL9rXx34i+HGg2XhrwHd33l6HZ6XbfZ7f7PHHHbRXEcflx+X9o8v7R5fl/u/M71+y37CPwa8GeD/2T/CXiLV/D2lSfFfUoj4jlubyKyuNS0qyvd9tZm2kjzJb29xbW5kxv5lkuenzxp+CNf0C/wDBPvwJeeGf2GLXxprrTz+J/GVyLx7jUdPMV7Fp9sosdPtvMk/eS23lW/m2/wDyzEVwPLyD5kgB4X/wU4+LcNh4G8G/BHTbq7TU9RlTxBrnkXEkafY4zJFbRyR+X5dxHJP5kmPMzHJZxZQ+ZHXx
-P+yBcWXgP4neOf2hdds7q68O/C3wtLdx/Z7hEivNTvQbLTrKTEcknl3BkuP3scY8uSOOST93/rNb/goFrWrav/wVH8cWGpXX2m10ey0+x0mPy408i3+xR3Pl5/5af6RcXEn7z/npXzFB8QfEFp8CtQ+GOl3EGl+Hb/V/7T1z7FH5dxqvlRxx28d7J/rJLe38uSSOP/V+ZcSSf6zyvLAMyxsfE/jv4qWGmWcl34o8ZeIdXjt7b7bff6TqN5cyeV+8uJJP9ZJJJ/rZJK/pa8W+I/DP7Mv7ANzqshu9S0HwB4Yt9N02K9lP2jUZIkjtrSKSSOLEbyyeVH5vl+WnmbyAgOPxo/4J9/DNvH3/AAUC0vxBfWn2nQ/Bli+sXRudH+020l3ny7OPzP8AV28m+T7TF/15/uwf9ZH9c/8ABTv4lNpnws8B/CSw1IpPrV6+satHb6v5ckdpb/u4I7i3x+8jlkkeWMvx5undJCDsAPyD06x8SeO/inYaZbyXfiLxl4l1eO3jkvb7/SdRvLmTy/3kkkn+skkk/wBZJX3L8OP+Cc3xr1349xaH8TLGHwX4Bt5HN/4g0/V7e5lu445P+XOMfvPMk6Ry3EcflxgySR+Z+6k57/gn18M28d/8FA9L1+9tPtOh+DbKTV7n7To/2m2kuP8AV2cfmf6u3k8yT7TF/wBef7sH/WR/0M0AfNH7U3xfm+Cv7EnjLxlpN5DB4pMaafoP2i6iikF5cP5UckcckcnmvEnmXHlCM70gk+o/mg07+zINYsPt9nPdaNHJH9ptrK5jt5JLf/lpHHJJHJ5cn/TTy5P+udfuj/wVA2f8MHeDN/T/AIWDa7Pr/Z2oV+L/AMM/iD4j+FPx28MfEPwhJBF4j0K5+0W32i28yOTzI5I5I5I/+eckckkf/PX95+78ugD2H4PPJ8Sf+CrXwln8EeCbHwzYDxnpdxZeHtPuv3dnYadLHJJmW4k/0iSO3t5JZZf9ZcSeZJ/rJPKr+mSv
-zV/Yg8d/tD/HHx54r+LnxQ8R3jfDmK2uNP8ADGlRabFZ6ddXFzcRyXMlvs/eSpZi3+zxySeZ/wAfEkfmeZHcZ/SqgAr47/b4Tf8A8EnPiqPV9K/9O1nX2JX5r/8ABURA/wCwh4Hb+58RLc/+U3UKAPwror2P4AfCO/8Ajj+1h4T+HtpHcRWF3dfaNcvLXzP9D0+P95cSeZ5cnlyeX+7j82PyvMkjj/5aVy/xU8O6T4P/AGqPil4U0GxOm6Ho3jLU7DTrUyySGKCO9kjji8yQmST93/z0NAEXw4+H/if4q/HDw58PfBlvay+J9aupI7H7ZcG3t4/LjkkkkkkH/LOOOOST/np+7/dxyV/SJqT+Fv2Y/wBgG/l0i3t18OeA/C7rZ211cwWLajNHH+7SSVIxH9ouZyMuI/nluD8hL4r43/4Jz/s93ngz4cXXxv8AEY8nVvFum/ZNBsnjuY5bLT/N8ySWTfiOT7RJFbyRny8eVGkiP/pEkY+hv2+Ci/8ABJ74qF+mdL/9O1nQB+EGiaP8S/2lP2t7XTP7TPin4leL76QSajqtz9nj/dx+ZJJJ/wA84444/wDVxx/6qPy44/8AVx151r0OkWXjPWLTQNbPiHw7BeyR6bqpsZLP+0LfzP3dx9nk/eR+ZH+88uT/AFdVrG+vNOvJbjT7yewlktpLeWW2l8vzI5I5IpI/+uckckkcn/TOSvsb9ib9nCT44ftGw+IPEenXB+GHhS6juNUuHsopLPVLuOWOSPSpBL/rfMjIll/dyfuv3f7v7RFJQB+3Hw9n/wCFSf8ABPbwTN8QwfDh8GfDuzPiUbftH2H7Fp8YuT+48zzBH5cn+r8zOOM8V/NZ8SvHOo/Er4++L/iDqrXC3euatPf+RdXr3htI5JP3duZAAJI44/LjjwP9XHX7hf8ABRP4mDwV+wY/hbT737PrvjbUo9LiEGrfZrmO1i/0i4lEX37iPEcdtJH/AKvF5+8yD5cn5Gfsp/DM/Fb9
-vj4c+F7iz+3aFBqY1PWzLpH9oW32OzP2iSO5j/1fl3Plx23mSf8APxH/AKz/AFdAHr/hz/gnj+0lqPxR0fRPEGgWHhbw5dmN73xE2r293Hp6SR+ZJ/o8cnmSSRn915f+q8z/AJaeX+8r9lvFfiPw5+zL+wDc6q5u9S0HwB4Yg03TYr2U/aNRkiSO2tIpJI4sRvLJ5UZlEflp5m8gIDj6Cr8nv+CnfxKbTPhZ4D+ElhqRSfWr19Y1aO31fy5I7S3/AHcEdxb4/eRyySPLGX483TukhB2AH436jqV5qWsXWqaxqE+qapd3MlxfXt7c+Zc3Ekn+skkkk/1klbug2v8AwmHxe8J6R4n8V/2RYX19p+l3PiLWbrzI9Ks/3dt5knmyf6u2t/8AprH+7j/5Z1veAbKwj0jx14s1vTrTUNK0bw1cW9vZ6jbf6Neahe/6FbRxySf6u4j+0XGox/8ALX/iVyf6v/Wx6XwJ0D/hKv21vhHoEmhHxJYXfjGwj1PTBYi8jns/tEf2gyRnjy/L8yWTP/LPzKAP6RfhN8JPBfwQ+DOneBvANgbDR4GMt1cTDzbrUblsB7m4kx87vs69ANkabI440H4Uft86jf3v/BVL4l291fz30NimmW9jFc3G+Oyj/s63l8uP/nnH5kkkn/XSSSv3b+MfxK0v4Q/sy+NPiTq8Ru7bQ9N8+K3DyR/a7hz5dvb+ZHHIYxLK8UW/yyE8zeeK/n3+Mn7Qa/G79nH4fWXjvw6NV+OGg3t5FqXxAP2e3Oo6X+8ktrbyLeOOM/vJP+2f2fzI/wDj5k8sA9g/Yl1L4Y+PNf1f9mf4o/DWx8WaR41vv7Usdai8y3voLuytpJPKkuI5Ek8ry47jy/KkzH59xH+8juJPL/oDr8Bv+CdXwo8T+KP227D4mR29zY+DvBltdm61BbX/AEa9u7m3kto7JJDJjf5dx9pPl+Z5YjTzPL+0R1+/NABRRRQAUUUUAFFFFABRRRQB4n8VfgB8
-I/jdcaBJ8T/C3/CUTaGs40zOpXFsbf7QY/M/495Iyc+RH1P8Fcn8PP2UvgF8KvihaeNPAfw6i0nxLawSw22o3WpXd7LAJBhzELiSTy3KZj8xB5mySRM4d8/TFFAHlvxJ+GXg74t/DxPCnj+wvNa8NtepcS2Vvqt3ZpcvHnyxJ9mlj8xAfn8uTMfmJG+MxxkeR+Ff2Nv2bPBHxH0Xxf4b+G9vZeINIuhdafNd6neXyW845RxHczyR70+/Gcfu3/eDB5r6uooAK+TvFP7F/wCzf4u+J+s+L/Enw0ivNd1i7N5qU9lq19ZR3E5/1khit7iOPe5/eOQg3yF5Dl3Jr6xooA+Pf+GCv2UP+iU/+XLqv/yTX0x4Y8PaT4Q+HegeE9Dszp+h6Np0Gn6ZbeY8nkW8EYjjj3ud74RMc5PH411VFAHlfxS+EPw++M/gOx8MfEzQD4i0O11FNQt7YX9xamO5SOSMSCSCSN87JJB1xzXK/Cv9nL4N/BjxPqOu/DXwNb+HdYvrUWlxePeXF3cmDzRJ5SPcyyeXGTs3iPG/y4858qPHv1FABXi3xQ+B/wALfjRo+jaX8TfCcfimDSrmW406Y3lzBPbGTiQCWCRJNkmBmPPlkxocZjjx7TRQB8yfDr9lP4CfCr4uQeOPAnw9i0bxJbW8tvbXs+pXl79nSQYfy47iV443IzH5iDzNkkiZw75+m6KKAPj1P2C/2T44tifCgAf9jLqv/wAk10fif9kb9nvxufDI8V/Dw6oPDfh+08P6MBruoRi30+23/ZovkuB5nl+bJiSTMnXmvp+igDxH4U/AD4T/AAQufEMnww8Kt4Yk1zyDqedUu7wXH2fzPK/4+JJNmPPk+5jr3xXt1FFAHyJ/wxN+y5/wnP8AwkH/AAqGx+3f2l9u8v8AtW9+x+Z5nmbPsfmfZ/Kz/wAu/l+Xj93s2cV9P6XpmnaH4cstH0awh0vSbK3jtrKytIxFBbog2RxxxpwiADp2ArcooA+a
-fiP+yp8BPit8Tr3xr48+H8Or+Jbm2igub+11G8spJkj4Tf8AZ5U3yAAJ5hG/y0jTOI0xja9+xv8As2eI9P8ADtvqXwygmi8P6KmlaRBDrN7beXaxSyS4/dzpvcyTyySSvmSSSQl5D1r6vooA8R+FPwA+E/wQufEMnww8Kt4Yk1zyDqedUu7wXH2fzPK/4+JJNmPPk+5jr3xWP8TP2Zfgj8YfiJbeKPiN4J/4SXXbfTItPiuDrF5bbLeOSSVI9lvKiHEkkh5r6GooA8R+FPwA+E/wQufEMnww8Kt4Yk1zyDqedUu7wXH2fzPK/wCPiSTZjz5PuY698V7dRRQBwPjfwX4b+Inw01fwd4y0iHX/AA5q1ube8sbgf6zByDkH5HQhZEkjIdHQOhyK+eLT9hn9liw1iy1C0+EsM9xa3EdzDHc67qVxFJJH0EkclwY5I/WOQGN+4r7FooAKKKKACvGvih8FPhv8adI0vTviR4fude0XT5Xnt7CLWr2ygMshH7ySO3kjEjgAjMmdgkkx998+y0UAeJ/Cj4C/Cn4ISa7/AMKw8Lnwwda8gakDqd3eC4+z+Z5R/wBIlk2Y8yQcHv615xr37FP7Mvifx1rfiTxB8Nv7Q1/WL6e/1K5/t/UIzPPJIZZJNkdwBku5PA4r6zooAw9L0zTtD8OWWj6NYQ6XpNlbx21lZWkYigt0QbI44404RAB07AUanpmna54bvdH1ixg1PS723kt72yu4hLBcI42SRyRvw6HPI7ityigD41f9gb9kx7Xyj8KZPL9P+Eq1j/5Jr6u0zTNO0Pw3ZaPo9jBpml2VvHb2VlaRCKC3RBsjjjjThEGOB2FblFAHifxX+Afwp+N0uhSfFDwq3idtGE40w/2ld2xt/P8AL83H2eSM8+XH1/uVi/DP9mP4I/B34j3Xin4ceCf+Ea1650yXT5bldZvLnfbySRyvHsuJZEH7yKM8V9DUUAFfPPxM/Zl+CPxh+Ilt4o+I3gn/AISX
-XbfTItPiuDrF5bbLeOSSVI9lvKiHEkkh5r6GooA+SLf9iT9mKPwlqGgxfDX/AIkt7eW19d2v/CQ6mRJcW8c8cEuftGchLu4HBx+8Oc8Y2fAf7JH7Pfw0+LGi+PPBHw/Oi+KtKaT7Fef27qFwIfMikt5P3cs8kfMckg6Z5r6eooA5XxJ4b8O+LfB134f8V+H9P8TaFcMhutO1Wzjubaby5BIheN/kOHRH5HUD2r5lT9gb9k5Itg+FjY/7GjVf/kmvsSigDmPD3hvQPCXg6z8P+FNC0/w1oVu0htdO0qzS2t4PMkMjlI0+Rcu7ucDqT6munoooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//Z</ImageData>
-    </EmbeddedImage>
   </EmbeddedImages>
   <Variables>
     <Variable Name="Classification">
-      <Value>Customer Confidential</Value>
+      <Value>Company Confidential</Value>
     </Variable>
   </Variables>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
-  <rd:ReportID>18451ee3-c5ba-44ac-b70b-97d70e760b5a</rd:ReportID>
+  <rd:ReportID>5c0c1f75-fbab-447c-be10-1eee7baacf86</rd:ReportID>
 </Report>

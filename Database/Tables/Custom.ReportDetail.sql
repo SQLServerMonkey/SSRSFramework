@@ -11,6 +11,8 @@ CREATE TABLE [Custom].[ReportDetail]
 [ReportTablixConfigurationID] [smallint] NOT NULL,
 [ReportImageLibraryID] [int] NOT NULL
 ) ON [Custom]
+ALTER TABLE [Custom].[ReportDetail] ADD
+CONSTRAINT [FK_CustomReportDetailReportTablixConfigurationID_CustomTablicConfigurationTablicXonfigurationID] FOREIGN KEY ([ReportTablixConfigurationID]) REFERENCES [Custom].[TablixConfiguration] ([TablixConfigurationID])
 ALTER TABLE [Custom].[ReportDetail] ADD 
 CONSTRAINT [PK_CustomReportDetailsReportDetailID] PRIMARY KEY CLUSTERED  ([ReportDetailID]) ON [Custom]
 ALTER TABLE [Custom].[ReportDetail] ADD
@@ -19,8 +21,7 @@ ALTER TABLE [Custom].[ReportDetail] ADD
 CONSTRAINT [FK_CustomReportDetailsFontFamilyId_CustomFontFamilyFontFamilyId] FOREIGN KEY ([FontFamilyID]) REFERENCES [Custom].[FontFamily] ([FontFamilyId])
 ALTER TABLE [Custom].[ReportDetail] ADD
 CONSTRAINT [FK_CustomReportDetailsItemID_DboCatalogItemId] FOREIGN KEY ([ItemID]) REFERENCES [dbo].[Catalog] ([ItemID])
-ALTER TABLE [Custom].[ReportDetail] ADD
-CONSTRAINT [FK_CustomReportDetailReportTablixConfigurationID_CustomTablicConfigurationTablicXonfigurationID] FOREIGN KEY ([ReportTablixConfigurationID]) REFERENCES [Custom].[TablixConfiguration] ([TablixConfigurationID])
+
 ALTER TABLE [Custom].[ReportDetail] ADD
 CONSTRAINT [FK_CustomReportDetailReportImageLibraryID_CustomReportImageLibraryReportImageLibraryID] FOREIGN KEY ([ReportImageLibraryID]) REFERENCES [Custom].[ReportImageLibrary] ([ReportImageLibraryID])
 

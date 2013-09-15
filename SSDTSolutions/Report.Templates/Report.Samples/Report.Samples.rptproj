@@ -31,12 +31,12 @@
   </DataSets>
   <Reports>
     <ProjectItem>
-      <Name>AW.OrderDetailsSummaryReport.rdl</Name>
-      <FullPath>AW.OrderDetailsSummaryReport.rdl</FullPath>
+      <Name>AWOrderDetailsSummaryReport.rdl</Name>
+      <FullPath>AWOrderDetailsSummaryReport.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>AW.OrderSummary.rdl</Name>
-      <FullPath>AW.OrderSummary.rdl</FullPath>
+      <Name>AWOrderSummary.rdl</Name>
+      <FullPath>AWOrderSummary.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>AWSalesReport.rdl</Name>

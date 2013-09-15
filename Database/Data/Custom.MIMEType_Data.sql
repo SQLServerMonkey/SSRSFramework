@@ -1,4 +1,7 @@
 SET IDENTITY_INSERT [Custom].[MIMEType] ON
+INSERT INTO [Custom].[MIMEType] ([MIMETypeID], [TypeClass], [TypeName], [TypeDescription]) VALUES (0, N'', N'', N'')
+SET IDENTITY_INSERT [Custom].[MIMEType] OFF
+SET IDENTITY_INSERT [Custom].[MIMEType] ON
 INSERT INTO [Custom].[MIMEType] ([MIMETypeID], [TypeClass], [TypeName], [TypeDescription]) VALUES (-1, N'', N'', N'Default MIME Type record where none is required or specified.')
 INSERT INTO [Custom].[MIMEType] ([MIMETypeID], [TypeClass], [TypeName], [TypeDescription]) VALUES (1, N'image', N'gif', N'')
 INSERT INTO [Custom].[MIMEType] ([MIMETypeID], [TypeClass], [TypeName], [TypeDescription]) VALUES (2, N'image', N'jpeg', N'')

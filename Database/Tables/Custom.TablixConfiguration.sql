@@ -13,28 +13,29 @@ CREATE TABLE [Custom].[TablixConfiguration]
 [TablixGroupTotalFontWeightID] [tinyint] NOT NULL,
 [TablixHeaderFontSize] [tinyint] NOT NULL,
 [TablixBodyFontSize] [tinyint] NOT NULL,
-[TablixGroupTotalFontSize] [tinyint] NOT NULL
+[TablixGroupTotalFontSize] [tinyint] NOT NULL,
+[TablixConfigurationName] [nvarchar] (75) COLLATE Latin1_General_CI_AS_KS_WS NOT NULL
 ) ON [Custom]
-GO
-ALTER TABLE [Custom].[TablixConfiguration] ADD CONSTRAINT [PK_CustomTablixConfigurationID] PRIMARY KEY CLUSTERED  ([TablixConfigurationID]) ON [Custom]
-GO
-ALTER TABLE [Custom].[TablixConfiguration] ADD CONSTRAINT [FK_CustomTablixConfigurationTablixBodyFontFamilyID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixBodyFontFamilyID]) REFERENCES [Custom].[FontFamily] ([FontFamilyId])
-GO
-ALTER TABLE [Custom].[TablixConfiguration] ADD CONSTRAINT [FK_CustomTablixConfigurationTablixBodyFontWeightID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixBodyFontWeightID]) REFERENCES [Custom].[FontWeight] ([FontWeightID])
-GO
-ALTER TABLE [Custom].[TablixConfiguration] ADD CONSTRAINT [FK_CustomTablixConfigurationTablixEvenRowColourPaletteID_CustomColourPaletteColourPaletteID] FOREIGN KEY ([TablixEvenRowColourPaletteID]) REFERENCES [Custom].[ColourPalette] ([ColourPaletteID])
-GO
-ALTER TABLE [Custom].[TablixConfiguration] ADD CONSTRAINT [FK_CustomTablixConfigurationTablixGroupTotalFontFamilyID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixGroupTotalFontFamilyID]) REFERENCES [Custom].[FontFamily] ([FontFamilyId])
-GO
-ALTER TABLE [Custom].[TablixConfiguration] ADD CONSTRAINT [FK_CustomTablixConfigurationTablixGroupTotalFontWeightID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixGroupTotalFontWeightID]) REFERENCES [Custom].[FontWeight] ([FontWeightID])
-GO
-ALTER TABLE [Custom].[TablixConfiguration] ADD CONSTRAINT [FK_CustomTablixConfigurationTablixHeaderBackgroundColourPaletteID_CustomColourPaletteColourPaletteID] FOREIGN KEY ([TablixHeaderBackgroundColourPaletteID]) REFERENCES [Custom].[ColourPalette] ([ColourPaletteID])
-GO
-ALTER TABLE [Custom].[TablixConfiguration] ADD CONSTRAINT [FK_CustomTablixConfigurationTablixHeaderFontFamilyID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixHeaderFontFamilyID]) REFERENCES [Custom].[FontFamily] ([FontFamilyId])
-GO
-ALTER TABLE [Custom].[TablixConfiguration] ADD CONSTRAINT [FK_CustomTablixConfigurationTablixHeaderFontWeightID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixHeaderFontWeightID]) REFERENCES [Custom].[FontWeight] ([FontWeightID])
-GO
-ALTER TABLE [Custom].[TablixConfiguration] ADD CONSTRAINT [FK_CustomTablixConfigurationTablixHeaderTextColourPaletteID_CustomColourPaletteColourPaletteID] FOREIGN KEY ([TablixHeaderTextColourPaletteID]) REFERENCES [Custom].[ColourPalette] ([ColourPaletteID])
-GO
-ALTER TABLE [Custom].[TablixConfiguration] ADD CONSTRAINT [FK_CustomTablixConfigurationTablixOddRowColourPaletteID_CustomColourPaletteColourPaletteID] FOREIGN KEY ([TablixOddRowColourPaletteID]) REFERENCES [Custom].[ColourPalette] ([ColourPaletteID])
+ALTER TABLE [Custom].[TablixConfiguration] ADD 
+CONSTRAINT [PK_CustomTablixConfigurationID] PRIMARY KEY CLUSTERED  ([TablixConfigurationID]) ON [Custom]
+ALTER TABLE [Custom].[TablixConfiguration] ADD
+CONSTRAINT [FK_CustomTablixConfigurationTablixHeaderBackgroundColourPaletteID_CustomColourPaletteColourPaletteID] FOREIGN KEY ([TablixHeaderBackgroundColourPaletteID]) REFERENCES [Custom].[ColourPalette] ([ColourPaletteID])
+ALTER TABLE [Custom].[TablixConfiguration] ADD
+CONSTRAINT [FK_CustomTablixConfigurationTablixHeaderTextColourPaletteID_CustomColourPaletteColourPaletteID] FOREIGN KEY ([TablixHeaderTextColourPaletteID]) REFERENCES [Custom].[ColourPalette] ([ColourPaletteID])
+ALTER TABLE [Custom].[TablixConfiguration] ADD
+CONSTRAINT [FK_CustomTablixConfigurationTablixOddRowColourPaletteID_CustomColourPaletteColourPaletteID] FOREIGN KEY ([TablixOddRowColourPaletteID]) REFERENCES [Custom].[ColourPalette] ([ColourPaletteID])
+ALTER TABLE [Custom].[TablixConfiguration] ADD
+CONSTRAINT [FK_CustomTablixConfigurationTablixEvenRowColourPaletteID_CustomColourPaletteColourPaletteID] FOREIGN KEY ([TablixEvenRowColourPaletteID]) REFERENCES [Custom].[ColourPalette] ([ColourPaletteID])
+ALTER TABLE [Custom].[TablixConfiguration] ADD
+CONSTRAINT [FK_CustomTablixConfigurationTablixHeaderFontFamilyID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixHeaderFontFamilyID]) REFERENCES [Custom].[FontFamily] ([FontFamilyId])
+ALTER TABLE [Custom].[TablixConfiguration] ADD
+CONSTRAINT [FK_CustomTablixConfigurationTablixBodyFontFamilyID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixBodyFontFamilyID]) REFERENCES [Custom].[FontFamily] ([FontFamilyId])
+ALTER TABLE [Custom].[TablixConfiguration] ADD
+CONSTRAINT [FK_CustomTablixConfigurationTablixGroupTotalFontFamilyID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixGroupTotalFontFamilyID]) REFERENCES [Custom].[FontFamily] ([FontFamilyId])
+ALTER TABLE [Custom].[TablixConfiguration] ADD
+CONSTRAINT [FK_CustomTablixConfigurationTablixHeaderFontWeightID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixHeaderFontWeightID]) REFERENCES [Custom].[FontWeight] ([FontWeightID])
+ALTER TABLE [Custom].[TablixConfiguration] ADD
+CONSTRAINT [FK_CustomTablixConfigurationTablixBodyFontWeightID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixBodyFontWeightID]) REFERENCES [Custom].[FontWeight] ([FontWeightID])
+ALTER TABLE [Custom].[TablixConfiguration] ADD
+CONSTRAINT [FK_CustomTablixConfigurationTablixGroupTotalFontWeightID_CustomFontFamilyFontFamilyID] FOREIGN KEY ([TablixGroupTotalFontWeightID]) REFERENCES [Custom].[FontWeight] ([FontWeightID])
 GO
