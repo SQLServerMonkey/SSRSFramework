@@ -27,6 +27,7 @@ CREATE TABLE [dbo].[Catalog]
 [ComponentID] [uniqueidentifier] NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
@@ -65,7 +66,7 @@ BEGIN
                   N'', -- ReportTitle - nvarchar(255)
                   N'', -- ReportSubTitle - nvarchar(255)
                   @TablixConfigID,
-                  NULL  -- ReportImageLibraryID - int
+                  1  -- ReportImageLibraryID - int
         FROM INSERTED AS Ins
         WHERE Ins.[Type] IN (2,4) --// Types: 2 = Report, 4 = Linked Report
         ;
@@ -87,6 +88,7 @@ BEGIN
 
 END
 GO
+
 
 ALTER TABLE [dbo].[Catalog] ADD CONSTRAINT [PK_Catalog] PRIMARY KEY NONCLUSTERED  ([ItemID]) ON [PRIMARY]
 GO

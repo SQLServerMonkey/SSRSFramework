@@ -35,12 +35,12 @@
       <FullPath>AWOrderDetailsSummaryReport.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>AWOrderSummary.rdl</Name>
-      <FullPath>AWOrderSummary.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>AWSalesReport.rdl</Name>
       <FullPath>AWSalesReport.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>AWOrderSummary.rdl</Name>
+      <FullPath>AWOrderSummary.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
@@ -65,7 +65,9 @@
         <TargetServerURL>http://localhost:8080/Reportserver_SQL2012</TargetServerURL>
         <TargetFolder>Report.Samples</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
+        <OverwriteDataSources>true</OverwriteDataSources>
         <TargetDatasetFolder>Datasets</TargetDatasetFolder>
+        <OverwriteDatasets>true</OverwriteDatasets>
         <TargetReportPartFolder>Report Parts</TargetReportPartFolder>
       </Options>
     </Configuration>
