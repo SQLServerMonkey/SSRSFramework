@@ -1,0 +1,5 @@
+SET IDENTITY_INSERT [Custom].[ReportDetail] ON
+INSERT INTO [Custom].[ReportDetail] ([ReportDetailID], [ReportColourSchemeID], [ReportClassificationID], [FontFamilyID], [RDLName], [ItemID], [ReportTitle], [ReportSubTitle], [ReportTablixConfigurationID], [ReportImageLibraryID]) VALUES (22, 1, 1, 11, N'AWOrderDetailsSummaryReport', '523419cf-b4e9-46bd-b2c7-610cdf87b700', N'Order Detail Summary', N'', 1, 1)
+INSERT INTO [Custom].[ReportDetail] ([ReportDetailID], [ReportColourSchemeID], [ReportClassificationID], [FontFamilyID], [RDLName], [ItemID], [ReportTitle], [ReportSubTitle], [ReportTablixConfigurationID], [ReportImageLibraryID]) VALUES (23, 1, 3, 11, N'AWOrderSummary', '78c03829-ff78-493f-86a4-47f6307039d8', N'Order Summary', N'', 1, 1)
+INSERT INTO [Custom].[ReportDetail] ([ReportDetailID], [ReportColourSchemeID], [ReportClassificationID], [FontFamilyID], [RDLName], [ItemID], [ReportTitle], [ReportSubTitle], [ReportTablixConfigurationID], [ReportImageLibraryID]) VALUES (24, 1, 4, 11, N'AWSalesReport', 'c8c4c318-fd45-4f35-8088-267ed5e4c44d', N'Sales Order Detail', N'', 2, 3)
+SET IDENTITY_INSERT [Custom].[ReportDetail] OFF

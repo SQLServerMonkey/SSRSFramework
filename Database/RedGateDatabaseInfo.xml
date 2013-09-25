@@ -55,11 +55,16 @@
     <DataWriteAllFilesInOneDirectory>True</DataWriteAllFilesInOneDirectory>
   </WriteToFileOptions>
   <DataFileSet>
-    <Count>5</Count>
+    <Count>10</Count>
     <DataFile>Custom.FontFamily_Data.sql</DataFile>
     <DataFile>Custom.FontWeight_Data.sql</DataFile>
     <DataFile>Custom.ColourPalette_Data.sql</DataFile>
     <DataFile>Custom.ReportClassification_Data.sql</DataFile>
     <DataFile>Custom.MIMEType_Data.sql</DataFile>
+    <DataFile>Custom.ExecutionAlert_Data.sql</DataFile>
+    <DataFile>Custom.ReportColourScheme_Data.sql</DataFile>
+    <DataFile>Custom.ReportImageLibrary_Data.sql</DataFile>
+    <DataFile>Custom.TablixConfiguration_Data.sql</DataFile>
+    <DataFile>Custom.ReportDetail_Data.sql</DataFile>
   </DataFileSet>
 </DatabaseInformation>
